@@ -1,0 +1,9 @@
+Será necessário guardar os pdfs dos documentos prediais no servidor para cada utilizador.
+
+Estou a trabalhar no modelo de dados, que está a ser melhorado on the go. Detalhes e preocupações podem ser anotados aqui.
+
+Será interessante considerar a adição de contas bancárias (NIB) aos movimentos no futuro
+
+Considerar fazer operações do lado do código e não do lado do SQL.
+
+Ao adicionar uma compra

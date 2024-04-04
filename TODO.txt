@@ -1,0 +1,13 @@
+1. Create data model -> has its own file
+    1.1 Create tables and stored procedures
+    1.2 Implement and configure Entities, Services and Controllers
+
+2. Test model using only backend
+
+3. Create basic front end to trigger back-end endpoints
+
+4. Learn React to implement a stronger front end
+
+5. Create the feature to add files to the server for land documents (can be expanded to bovine and vehicle documents).
+
+6. Implement support for multiple users, with login feature.

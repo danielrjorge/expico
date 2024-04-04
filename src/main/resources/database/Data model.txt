@@ -1,0 +1,94 @@
+b100 (Bovine)
+- (maybe) id -> int auto_increment
+- bovine code -> int primarykey
+- gender -> (Enum or varchar) not null
+- birthdate -> date not null
+- bovinestatus (alive/dead/sold/abate) -> enum or varchar not null
+- bovinename varchar,
+- dateofdeath -> date
+- Cause of death -> varchar
+- Breed -> varchar
+- mother code -> int (foreign key?)
+- father code -> int ""
+- color -> varchar
+- owner_id -> int
+
+b101 (Bought Cattle)
+- id -> int auto_increment
+- bovinecode -> int foreign key (b100)
+- buydate -> date
+- totalprice -> double
+- vat -> double
+
+b102 (Sold Cattle)
+- id -> int auto_increment
+- bovinecode -> int foreign key (b100)
+- selldate -> date
+- totalprice -> double
+- vat -> double
+---> CHANGES b100 bovinestatus to SOLD
+
+b103 (Abate)
+- id -> int auto_increment
+- bovinecode -> int foreign key (b100)
+- abatedate -> date
+- totalweight -> int
+- netweight -> int
+- priceperkilo -> double
+- totalprice -> double
+- vat -> double
+---> CHANGES b100 bovinestatus to ABATE
+
+b104 (Vaccination)
+- id -> int auto_increment
+- bovinecode -> int foreign key (b100)
+- vaccinecode -> int
+- dateofvaccine -> date
+- dosage -> int
+
+m100 (Vaccines)
+- id -> int auto_increment
+- vaccinecode -> int
+- maker -> varchar
+- brand -> varchar
+
+f100 (Movements)
+- movement_id -> int auto_increment
+- movement_date -> date
+- movement_credit -> double(15,2)
+- movement_debit -> double(15,2)
+
+f101 (VAT)
+- vat_id -> int auto_increment
+- movement_id -> int foreign key movements
+- vat_value_purchase -> double(10,2)
+- vat_value_sale -> double(10,2)
+
+o100 (Owners personal info)
+- owner_id -> int auto_increment primary key
+- owner_gov_id -> int
+- owner_name -> varchar(100),
+- owner_nif -> int,
+- owner_cell_number -> varchar(15),
+- owner_email -> varchar(100)
+
+l100 (Lands)
+- id -> int auto_increment
+- parcelariocode -> int primarykey
+- cadernetapredial -> pdf STORE PATHS
+- descricaopredial -> pdf STORE PATHS
+- escritura -> pdf STORE PATHS
+- location -> varchar (coordenadas)
+- totalha -> double
+
+v100 (Vehicles)
+- id -> int auto_increment
+- vtype -> varchar or enum
+- licenseplate -> varchar
+- vehicleregistrationnumber -> long
+- brand -> varchar
+- lastoilchangedate -> date
+- lastoilchangekm -> int
+- nextoilchangedate -> date
+- nextoilchangekm -> int
+

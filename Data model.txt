@@ -1,0 +1,32 @@
+b100 (Bovine)
+- (maybe) id -> int auto_increment
+- bovine code -> int primarykey
+- gender -> (Enum or varchar) not null
+- birthdate -> date not null
+- bovinestatus (alive/dead) -> enum or varchar not null
+- bovinename varchar,
+- dateofdeath -> date
+- Cause of death -> varchar
+- Breed -> varchar
+- mother code -> int (foreign key?)
+- father code -> int ""
+- color -> varchar
+
+l101 (Lands)
+- id -> int auto_increment
+- parcelariocode -> int primarykey
+- cadernetapredial -> pdf STORE PATHS
+- descricaopredial -> pdf STORE PATHS
+- escritura -> pdf STORE PATHS
+- location -> varchar (coordenadas)
+- totalha -> double
+
+v102 (Vehicles)
+- id -> int auto_increment
+- vtype -> varchar or enum
+- brand -> varchar
+- lastoilchangedate -> date
+- lastoilchangekm -> int
+- nextoilchangedate -> date
+- nextoilchangekm -> int
+

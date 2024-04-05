@@ -6,4 +6,6 @@ Será interessante considerar a adição de contas bancárias (NIB) aos moviment
 
 Considerar fazer operações do lado do código e não do lado do SQL.
 
-Ao adicionar uma compra
+É necessário associar as vacas da exploração a terras, provavelmente com novas tabelas.
+
+Ver o comportamento dos updates. Neste momento

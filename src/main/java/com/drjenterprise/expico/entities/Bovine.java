@@ -4,6 +4,7 @@ import com.drjenterprise.expico.entities.enums.BovineBreed;
 import com.drjenterprise.expico.entities.enums.BovineColor;
 import com.drjenterprise.expico.entities.enums.BovineStatus;
 import com.drjenterprise.expico.entities.enums.Gender;
+import com.drjenterprise.expico.entities.owner.OwnerDAO;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -12,42 +13,69 @@ import java.time.LocalDate;
 @Table(name = "b100")
 public class Bovine {
     @Id
-    @Column(name="bovinecode")
+    @GeneratedValue
+    @Column(name = "bovine_id")
+    private int bovineId;
+
+    @Column(name = "bovine_prefix", nullable = false, length = 2)
+    private String bovinePrefix;
+
+    @Column(name = "bovine_code", nullable = false)
     private int bovineCode;
 
-    @Column(name="breed")
+    @Column(name = "breed", nullable = false)
     @Enumerated(EnumType.STRING)
     private BovineBreed breed;
 
-    @Column(name="color")
+    @Column(name = "color")
     @Enumerated(EnumType.STRING)
     private BovineColor color;
 
-    @Column(name="gender")
+    @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(name="birthdate")
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @Column(name="bovinename")
+    @Column(name = "bovine_name")
     private String bovineName;
 
-    @Column(name="bovinestatus")
+    @Column(name = "bovine_status", nullable = false)
     @Enumerated(EnumType.STRING)
     private BovineStatus bovineStatus;
 
-    @Column(name="dateofdeath")
+    @Column(name = "date_of_death")
     private LocalDate dateOfDeath;
 
-    @Column(name="causeofdeath")
+    @Column(name = "cause_of_death")
     private String causeOfDeath;
 
-    @Column(name="motherscode")
+    @Column(name = "mothers_code")
     private int mothersCode;
 
-    @Column(name="fatherscode")
+    @Column(name = "fathers_code", nullable = false)
     private int fathersCode;
+
+    @PrimaryKeyJoinColumn(name = "last_known_owner_id")
+    @OneToOne(targetEntity = OwnerDAO.class)
+    private int lastKnownOwnerId;
+
+    public int getBovineId() {
+        return bovineId;
+    }
+
+    public void setBovineId(int bovineId) {
+        this.bovineId = bovineId;
+    }
+
+    public String getBovinePrefix() {
+        return bovinePrefix;
+    }
+
+    public void setBovinePrefix(String bovinePrefix) {
+        this.bovinePrefix = bovinePrefix;
+    }
 
     public int getBovineCode() {
         return bovineCode;
@@ -137,10 +165,20 @@ public class Bovine {
         this.fathersCode = fathersCode;
     }
 
+    public int getLastKnownOwnerId() {
+        return lastKnownOwnerId;
+    }
+
+    public void setLastKnownOwnerId(int lastKnownOwnerId) {
+        this.lastKnownOwnerId = lastKnownOwnerId;
+    }
+
     @Override
     public String toString() {
         return "Bovine{" +
-                "bovineCode=" + bovineCode +
+                "bovineId=" + bovineId +
+                ", bovinePrefix='" + bovinePrefix + '\'' +
+                ", bovineCode=" + bovineCode +
                 ", breed=" + breed +
                 ", color=" + color +
                 ", gender=" + gender +
@@ -151,6 +189,7 @@ public class Bovine {
                 ", causeOfDeath='" + causeOfDeath + '\'' +
                 ", mothersCode=" + mothersCode +
                 ", fathersCode=" + fathersCode +
+                ", lastKnownOwnerId=" + lastKnownOwnerId +
                 '}';
     }
 }

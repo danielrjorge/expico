@@ -42,7 +42,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>7.0.2.Final</version> <!-- Replace with the latest version -->
+		</dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

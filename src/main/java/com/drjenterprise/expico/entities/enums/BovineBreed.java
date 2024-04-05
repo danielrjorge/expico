@@ -2,7 +2,8 @@ package com.drjenterprise.expico.entities.enums;
 
 public enum BovineBreed {
     CHAROLES("Charoles"),
-    ANGUS("Angus");
+    ANGUS("Angus"),
+    CRUZADO_ANGUS("Cruzado Angus");
 
     private final String stringValue;
 

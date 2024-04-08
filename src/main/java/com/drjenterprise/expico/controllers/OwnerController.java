@@ -1,7 +1,7 @@
 package com.drjenterprise.expico.controllers;
 
-import com.drjenterprise.expico.entities.owner.OwnerREQ;
-import com.drjenterprise.expico.entities.owner.OwnerRES;
+import com.drjenterprise.expico.entities.dto.request.OwnerREQ;
+import com.drjenterprise.expico.entities.dto.response.OwnerRES;
 import com.drjenterprise.expico.services.OwnerServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/owners")
+@RequestMapping("/api/owners")
 public class OwnerController {
 
     private final OwnerServices ownerServices;
@@ -27,18 +27,18 @@ public class OwnerController {
         return new ResponseEntity<>(ownerServices.listAllOwners(), HttpStatus.OK);
     }
 
-    /*@GetMapping("/{id}")
-    public ResponseEntity<OwnerDAO> getOwnerById(@PathVariable("id") Integer id){
-        OwnerDAO existingOwnerDAO = ownerServices.getOwnerById(id);
+    @GetMapping("/id/{id}")
+    public ResponseEntity<OwnerRES> getOwnerById(@PathVariable("id") Integer id){
+        OwnerRES existingOwnerRES = ownerServices.getOwnerById(id);
 
-        HttpStatus status = existingOwnerDAO == null ? HttpStatus.NOT_FOUND: HttpStatus.OK;
+        HttpStatus status = existingOwnerRES == null ? HttpStatus.NOT_FOUND: HttpStatus.OK;
 
-        return new ResponseEntity<>(existingOwnerDAO, status);
-    }*/
+        return new ResponseEntity<>(existingOwnerRES, status);
+    }
 
-    @GetMapping("/{nif}")
-    public ResponseEntity<OwnerRES> getOwnerByNIF(@PathVariable("nif") Integer id) {
-        OwnerRES existingOwnerRES = ownerServices.getOwnerByNIF(id);
+    @GetMapping("/nif/{nif}")
+    public ResponseEntity<OwnerRES> getOwnerByNIF(@PathVariable("nif") Integer nif) {
+        OwnerRES existingOwnerRES = ownerServices.getOwnerByNIF(nif);
 
         HttpStatus status = existingOwnerRES == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
 

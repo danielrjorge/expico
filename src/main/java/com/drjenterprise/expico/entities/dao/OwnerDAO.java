@@ -1,4 +1,4 @@
-package com.drjenterprise.expico.entities.owner;
+package com.drjenterprise.expico.entities.dao;
 
 import jakarta.persistence.*;
 
@@ -8,8 +8,8 @@ public class OwnerDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "owner_id")
-    private int ownerId;
+    @Column(name = "owner_internal_id")
+    private int ownerInternalId;
 
     @Column(name = "owner_gov_id")
     private int ownerGovId;
@@ -26,12 +26,12 @@ public class OwnerDAO {
     @Column(name = "owner_email")
     private String ownerEmail;
 
-    public int getOwnerId() {
-        return ownerId;
+    public int getOwnerInternalId() {
+        return ownerInternalId;
     }
 
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerInternalId(int ownerInternalId) {
+        this.ownerInternalId = ownerInternalId;
     }
 
     public int getOwnerGovId() {
@@ -77,7 +77,7 @@ public class OwnerDAO {
     @Override
     public String toString() {
         return "Owner{" +
-                "ownerId=" + ownerId +
+                "ownerId=" + ownerInternalId +
                 ", ownerGovId=" + ownerGovId +
                 ", ownerName='" + ownerName + '\'' +
                 ", ownerNIF=" + ownerNIF +

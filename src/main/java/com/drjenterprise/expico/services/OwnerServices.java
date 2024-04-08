@@ -1,8 +1,8 @@
 package com.drjenterprise.expico.services;
 
-import com.drjenterprise.expico.entities.owner.OwnerDAO;
-import com.drjenterprise.expico.entities.owner.OwnerREQ;
-import com.drjenterprise.expico.entities.owner.OwnerRES;
+import com.drjenterprise.expico.entities.dao.OwnerDAO;
+import com.drjenterprise.expico.entities.dto.request.OwnerREQ;
+import com.drjenterprise.expico.entities.dto.response.OwnerRES;
 import com.drjenterprise.expico.repositories.OwnerRepository;
 import com.drjenterprise.expico.services.mappers.OwnerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +48,16 @@ public class OwnerServices {
         return resList;
     }
 
+    public OwnerRES getOwnerById(Integer id){
+        OwnerDAO existingDao = ownerRepository.findById(id).orElse(null);
+        if(existingDao != null){
+            return ownerMapper.convert(existingDao);
+        }
+        else {
+            return null;
+        }
+    }
+
     public OwnerRES getOwnerByNIF(Integer nif){
         OwnerDAO existingDao = ownerRepository.findByOwnerNIF(nif).orElse(null);
         if(existingDao != null){
@@ -61,7 +71,7 @@ public class OwnerServices {
         OwnerDAO existingOwner = ownerRepository.findByOwnerNIF(updatedOwnerREQ.getOwnerNIF()).orElse(null);
 
         if(existingOwner != null){
-            updatedOwnerREQ.setOwnerId(existingOwner.getOwnerId());
+            updatedOwnerREQ.setOwnerId(existingOwner.getOwnerInternalId());
             OwnerDAO savedDao = ownerRepository.save(ownerMapper.convert(updatedOwnerREQ));
             return ownerMapper.convert(savedDao);
         }
@@ -74,7 +84,7 @@ public class OwnerServices {
 
         OwnerDAO existingOwnerDAO = ownerRepository.findByOwnerNIF(nif).orElse(null);
         if(existingOwnerDAO != null){
-            ownerRepository.deleteById(existingOwnerDAO.getOwnerId());
+            ownerRepository.deleteById(existingOwnerDAO.getOwnerInternalId());
             return true;
         }
         else {

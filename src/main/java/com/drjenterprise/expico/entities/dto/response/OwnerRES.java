@@ -1,4 +1,4 @@
-package com.drjenterprise.expico.entities.owner;
+package com.drjenterprise.expico.entities.dto.response;
 
 public class OwnerRES {
     private int ownerGovId;

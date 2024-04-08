@@ -8,4 +8,8 @@ Considerar fazer operações do lado do código e não do lado do SQL.
 
 É necessário associar as vacas da exploração a terras, provavelmente com novas tabelas.
 
-Ver o comportamento dos updates. Neste momento
+Necessita adicionar logging mais robusto.
+
+Faltam os testes unitários.
+
+Preciso de criar mais excepções.

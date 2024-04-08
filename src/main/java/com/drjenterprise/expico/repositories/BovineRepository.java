@@ -1,7 +1,10 @@
 package com.drjenterprise.expico.repositories;
 
-import com.drjenterprise.expico.entities.Bovine;
+import com.drjenterprise.expico.entities.dao.BovineDAO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BovineRepository extends JpaRepository<Bovine, Integer> {
+import java.util.Optional;
+
+public interface BovineRepository extends JpaRepository<BovineDAO, Integer> {
+    Optional<BovineDAO> findByBovineCode(String code);
 }

@@ -1,6 +1,6 @@
 package com.drjenterprise.expico.repositories;
 
-import com.drjenterprise.expico.entities.owner.OwnerDAO;
+import com.drjenterprise.expico.entities.dao.OwnerDAO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

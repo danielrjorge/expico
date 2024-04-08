@@ -1,6 +1,6 @@
 b100 (Bovine)
 - (maybe) id -> int auto_increment
-- bovine code -> int primarykey
+- bovineDAO code -> varchar primary key
 - gender -> (Enum or varchar) not null
 - birthdate -> date not null
 - bovinestatus (alive/dead/sold/abate) -> enum or varchar not null
@@ -8,21 +8,21 @@ b100 (Bovine)
 - dateofdeath -> date
 - Cause of death -> varchar
 - Breed -> varchar
-- mother code -> int (foreign key?)
-- father code -> int ""
+- mother code -> varchar
+- father code -> varchar
 - color -> varchar
-- owner_id -> int
+- owner_nif -> int -> foreign key to nif in o100
 
 b101 (Bought Cattle)
 - id -> int auto_increment
-- bovinecode -> int foreign key (b100)
+- bovinecode -> varchar foreign key (b100)
 - buydate -> date
 - totalprice -> double
 - vat -> double
 
 b102 (Sold Cattle)
 - id -> int auto_increment
-- bovinecode -> int foreign key (b100)
+- bovinecode -> varchar foreign key (b100)
 - selldate -> date
 - totalprice -> double
 - vat -> double
@@ -30,7 +30,7 @@ b102 (Sold Cattle)
 
 b103 (Abate)
 - id -> int auto_increment
-- bovinecode -> int foreign key (b100)
+- bovinecode -> varchar foreign key (b100)
 - abatedate -> date
 - totalweight -> int
 - netweight -> int
@@ -41,7 +41,7 @@ b103 (Abate)
 
 b104 (Vaccination)
 - id -> int auto_increment
-- bovinecode -> int foreign key (b100)
+- bovinecode -> varchar foreign key (b100)
 - vaccinecode -> int
 - dateofvaccine -> date
 - dosage -> int
@@ -68,7 +68,7 @@ o100 (Owners personal info)
 - owner_id -> int auto_increment primary key
 - owner_gov_id -> int
 - owner_name -> varchar(100),
-- owner_nif -> int,
+- owner_nif -> int primary key,
 - owner_cell_number -> varchar(15),
 - owner_email -> varchar(100)
 

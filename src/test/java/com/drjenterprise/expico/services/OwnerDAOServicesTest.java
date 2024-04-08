@@ -1,8 +1,8 @@
 package com.drjenterprise.expico.services;
 
-import com.drjenterprise.expico.entities.owner.OwnerDAO;
-import com.drjenterprise.expico.entities.owner.OwnerREQ;
-import com.drjenterprise.expico.entities.owner.OwnerRES;
+import com.drjenterprise.expico.entities.dao.OwnerDAO;
+import com.drjenterprise.expico.entities.dto.request.OwnerREQ;
+import com.drjenterprise.expico.entities.dto.response.OwnerRES;
 import com.drjenterprise.expico.repositories.OwnerRepository;
 import com.drjenterprise.expico.services.mappers.OwnerMapper;
 import org.junit.jupiter.api.Test;

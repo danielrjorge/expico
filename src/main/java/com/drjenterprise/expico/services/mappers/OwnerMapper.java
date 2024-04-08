@@ -1,8 +1,8 @@
 package com.drjenterprise.expico.services.mappers;
 
-import com.drjenterprise.expico.entities.owner.OwnerDAO;
-import com.drjenterprise.expico.entities.owner.OwnerREQ;
-import com.drjenterprise.expico.entities.owner.OwnerRES;
+import com.drjenterprise.expico.entities.dao.OwnerDAO;
+import com.drjenterprise.expico.entities.dto.request.OwnerREQ;
+import com.drjenterprise.expico.entities.dto.response.OwnerRES;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,7 +11,7 @@ public class OwnerMapper {
     public OwnerDAO convert(OwnerREQ request){
         OwnerDAO ownerDAO = new OwnerDAO();
         if(request.getOwnerId() != null){
-            ownerDAO.setOwnerId(request.getOwnerId());
+            ownerDAO.setOwnerInternalId(request.getOwnerId());
         }
         if(request.getOwnerGovId() != null){
             ownerDAO.setOwnerGovId(request.getOwnerGovId());

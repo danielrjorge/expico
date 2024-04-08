@@ -8,7 +8,7 @@
 
 4. Learn React to implement a stronger front end
 
-5. Create the feature to add files to the server for land documents (can be expanded to bovine and vehicle documents).
+5. Create the feature to add files to the server for land documents (can be expanded to bovineDAO and vehicle documents).
 
 6. Implement support for multiple users, with login feature.
 

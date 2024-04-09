@@ -1,5 +1,6 @@
-package com.drjenterprise.expico.entities.dao;
+package com.drjenterprise.expico.entities.dao.bovines;
 
+import com.drjenterprise.expico.entities.dao.owner.OwnerDAO;
 import com.drjenterprise.expico.entities.enums.BovineBreed;
 import com.drjenterprise.expico.entities.enums.BovineColor;
 import com.drjenterprise.expico.entities.enums.BovineStatus;

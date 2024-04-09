@@ -1,6 +1,6 @@
 package com.drjenterprise.expico.services;
 
-import com.drjenterprise.expico.entities.dao.OwnerDAO;
+import com.drjenterprise.expico.entities.dao.owner.OwnerDAO;
 import com.drjenterprise.expico.entities.dto.request.OwnerREQ;
 import com.drjenterprise.expico.entities.dto.response.OwnerRES;
 import com.drjenterprise.expico.repositories.OwnerRepository;

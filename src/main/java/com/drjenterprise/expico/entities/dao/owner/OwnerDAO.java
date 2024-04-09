@@ -1,4 +1,4 @@
-package com.drjenterprise.expico.entities.dao;
+package com.drjenterprise.expico.entities.dao.owner;
 
 import jakarta.persistence.*;
 

@@ -1,6 +1,6 @@
 package com.drjenterprise.expico.repositories;
 
-import com.drjenterprise.expico.entities.dao.BovineDAO;
+import com.drjenterprise.expico.entities.dao.bovines.BovineDAO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

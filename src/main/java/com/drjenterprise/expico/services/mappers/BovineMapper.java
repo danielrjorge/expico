@@ -1,7 +1,7 @@
 package com.drjenterprise.expico.services.mappers;
 
-import com.drjenterprise.expico.entities.dao.BovineDAO;
-import com.drjenterprise.expico.entities.dao.OwnerDAO;
+import com.drjenterprise.expico.entities.dao.bovines.BovineDAO;
+import com.drjenterprise.expico.entities.dao.owner.OwnerDAO;
 import com.drjenterprise.expico.entities.dto.request.BovineREQ;
 import com.drjenterprise.expico.entities.dto.response.BovineRES;
 import com.drjenterprise.expico.entities.dto.response.OwnerRES;
@@ -15,10 +15,7 @@ import org.springframework.stereotype.Component;
 public class BovineMapper {
 
     @Autowired
-    OwnerMapper ownerMapper;
-
-    @Autowired
-    OwnerRepository ownerRepository;
+    private OwnerRepository ownerRepository;
 
     public BovineDAO convert(BovineREQ request) throws NifNotFoundException {
         BovineDAO bovineDAO = new BovineDAO();
@@ -47,7 +44,6 @@ public class BovineMapper {
             else {
                 bovineDAO.setLastKnownOwner(ownerDAO);
             }
-
         }
         return bovineDAO;
     }

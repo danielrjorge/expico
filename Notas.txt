@@ -13,3 +13,7 @@ Necessita adicionar logging mais robusto.
 Faltam os testes unitários.
 
 Preciso de criar mais excepções.
+
+Organizar em packages distintos e fazer controlo de acesso.
+
+Arranjar forma de reverter mudanças na base de dados em caso de erro. IMPORTANTE!

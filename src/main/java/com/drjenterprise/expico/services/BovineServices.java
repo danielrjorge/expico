@@ -1,6 +1,6 @@
 package com.drjenterprise.expico.services;
 
-import com.drjenterprise.expico.entities.dao.BovineDAO;
+import com.drjenterprise.expico.entities.dao.bovines.BovineDAO;
 import com.drjenterprise.expico.entities.dto.request.BovineREQ;
 import com.drjenterprise.expico.entities.dto.response.BovineRES;
 import com.drjenterprise.expico.exceptions.NifNotFoundException;
@@ -69,8 +69,6 @@ public class BovineServices {
                 logger.severe(e.getMessage());
                 return null;
             }
-
-
         }
         else {
             logger.warning("The bovine code already exists in the database!");

@@ -1,20 +1,24 @@
-package com.drjenterprise.expico.entities.dto.request;
+package com.drjenterprise.expico.entities.dto.response.bovines;
+
+import com.drjenterprise.expico.entities.dao.financial.FinancialMovementDao;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class BovinePurchaseREQ {
-    private BovineREQ bovine;
+public class BovinePurchaseRES {
+    private BovineRES bovine;
     private LocalDate purchaseDate;
     private Integer sellersNif;
     private BigDecimal totalPrice;
     private BigDecimal vatPercentage;
 
-    public BovineREQ getBovine() {
+    private FinancialMovementDao movement;
+
+    public BovineRES getBovine() {
         return bovine;
     }
 
-    public void setBovine(BovineREQ bovine) {
+    public void setBovine(BovineRES bovine) {
         this.bovine = bovine;
     }
 
@@ -48,5 +52,13 @@ public class BovinePurchaseREQ {
 
     public void setVatPercentage(BigDecimal vatPercentage) {
         this.vatPercentage = vatPercentage;
+    }
+
+    public FinancialMovementDao getMovement() {
+        return movement;
+    }
+
+    public void setMovement(FinancialMovementDao movement) {
+        this.movement = movement;
     }
 }

@@ -1,8 +1,8 @@
 package com.drjenterprise.expico.services.mappers;
 
 import com.drjenterprise.expico.entities.dao.owner.OwnerDAO;
-import com.drjenterprise.expico.entities.dto.request.OwnerREQ;
-import com.drjenterprise.expico.entities.dto.response.OwnerRES;
+import com.drjenterprise.expico.entities.dto.request.owner.OwnerREQ;
+import com.drjenterprise.expico.entities.dto.response.owner.OwnerRES;
 import org.springframework.stereotype.Component;
 
 @Component

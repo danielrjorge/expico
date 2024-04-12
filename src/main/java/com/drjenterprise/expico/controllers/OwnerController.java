@@ -1,7 +1,7 @@
 package com.drjenterprise.expico.controllers;
 
-import com.drjenterprise.expico.entities.dto.request.OwnerREQ;
-import com.drjenterprise.expico.entities.dto.response.OwnerRES;
+import com.drjenterprise.expico.entities.dto.request.owner.OwnerREQ;
+import com.drjenterprise.expico.entities.dto.response.owner.OwnerRES;
 import com.drjenterprise.expico.services.OwnerServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

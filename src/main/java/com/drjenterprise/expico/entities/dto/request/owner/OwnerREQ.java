@@ -1,4 +1,4 @@
-package com.drjenterprise.expico.entities.dto.request;
+package com.drjenterprise.expico.entities.dto.request.owner;
 
 import jakarta.validation.constraints.Email;
 

@@ -2,9 +2,9 @@ package com.drjenterprise.expico.services.mappers;
 
 import com.drjenterprise.expico.entities.dao.bovines.BovineDAO;
 import com.drjenterprise.expico.entities.dao.owner.OwnerDAO;
-import com.drjenterprise.expico.entities.dto.request.BovineREQ;
-import com.drjenterprise.expico.entities.dto.response.BovineRES;
-import com.drjenterprise.expico.entities.dto.response.OwnerRES;
+import com.drjenterprise.expico.entities.dto.request.bovines.BovineREQ;
+import com.drjenterprise.expico.entities.dto.response.bovines.BovineRES;
+import com.drjenterprise.expico.entities.dto.response.owner.OwnerRES;
 import com.drjenterprise.expico.entities.enums.BovineStatus;
 import com.drjenterprise.expico.exceptions.NifNotFoundException;
 import com.drjenterprise.expico.repositories.OwnerRepository;

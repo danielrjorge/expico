@@ -1,9 +1,9 @@
 package com.drjenterprise.expico.services;
 
-import com.drjenterprise.expico.entities.dao.bovines.BovinePurchaseDao;
+import com.drjenterprise.expico.entities.dao.bovines.BovineSaleDao;
 import com.drjenterprise.expico.entities.dao.financial.FinancialMovementDao;
 import com.drjenterprise.expico.entities.dao.financial.VatAdjustmentDao;
-import com.drjenterprise.expico.repositories.BovinePurchaseRepository;
+import com.drjenterprise.expico.repositories.BovineSaleRepository;
 import com.drjenterprise.expico.repositories.FinancialMovementRepository;
 import com.drjenterprise.expico.repositories.VatAdjustmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,50 +13,48 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class BovinePurchaseService {
+public class BovineSaleService {
 
-    private final BovinePurchaseRepository bovinePurchaseRepository;
+    private final BovineSaleRepository bovineSaleRepository;
     private final FinancialMovementRepository financialMovementRepository;
     private final VatAdjustmentRepository vatAdjustmentRepository;
 
     @Autowired
-    public BovinePurchaseService(BovinePurchaseRepository bovinePurchaseRepository,
+    public BovineSaleService(BovineSaleRepository bovineSaleRepository,
                                  FinancialMovementRepository financialMovementRepository,
                                  VatAdjustmentRepository vatAdjustmentRepository){
-        this.bovinePurchaseRepository = bovinePurchaseRepository;
+        this.bovineSaleRepository = bovineSaleRepository;
         this.financialMovementRepository = financialMovementRepository;
         this.vatAdjustmentRepository = vatAdjustmentRepository;
     }
 
-    public List<BovinePurchaseDao> getAllBovinePurchases(){
-        return bovinePurchaseRepository.findAll();
+    public List<BovineSaleDao> getAllBovineSales(){
+        return bovineSaleRepository.findAll();
     }
 
-    public BovinePurchaseDao createBovinePurchase(BovinePurchaseDao requestDao) {
-
+    public BovineSaleDao createBovineSale(BovineSaleDao requestDao) {
         addFinancialMovementAndSaveVatAdjustment(requestDao);
-        return bovinePurchaseRepository.save(requestDao);
-
+        return bovineSaleRepository.save(requestDao);
     }
 
-    private void addFinancialMovementAndSaveVatAdjustment(BovinePurchaseDao bovinePurchaseDao){
+    private void addFinancialMovementAndSaveVatAdjustment(BovineSaleDao bovineSaleDao){
         FinancialMovementDao financialMovementDao = new FinancialMovementDao();
-        financialMovementDao.setMovementDate(bovinePurchaseDao.getPurchaseDate());
-        financialMovementDao.setMovementDebit(bovinePurchaseDao.getTotalPrice());
+        financialMovementDao.setMovementDate(bovineSaleDao.getSaleDate());
+        financialMovementDao.setMovementCredit(bovineSaleDao.getTotalPrice());
         FinancialMovementDao savedFinancialMovementDao = financialMovementRepository.save(financialMovementDao);
 
         VatAdjustmentDao vatAdjustmentDao = new VatAdjustmentDao();
         vatAdjustmentDao.setFinancialMovement(financialMovementDao);
-        vatAdjustmentDao.setVatPercentage(bovinePurchaseDao.getVatPercentage());
-        vatAdjustmentDao.setVatValuePurchase(calculateVatValuePurchase(bovinePurchaseDao));
+        vatAdjustmentDao.setVatPercentage(bovineSaleDao.getVatPercentage());
+        vatAdjustmentDao.setVatValueSale(calculateVatValueSale(bovineSaleDao));
         VatAdjustmentDao savedVatAdjustmentDao = vatAdjustmentRepository.save(vatAdjustmentDao);
 
-        bovinePurchaseDao.setFinancialMovement(savedFinancialMovementDao);
+        bovineSaleDao.setFinancialMovement(savedFinancialMovementDao);
     }
 
-    private BigDecimal calculateVatValuePurchase(BovinePurchaseDao bovinePurchaseDao){
-        BigDecimal totalPrice = bovinePurchaseDao.getTotalPrice();
-        BigDecimal vat = bovinePurchaseDao.getVatPercentage();
+    private BigDecimal calculateVatValueSale(BovineSaleDao bovineSaleDao){
+        BigDecimal totalPrice = bovineSaleDao.getTotalPrice();
+        BigDecimal vat = bovineSaleDao.getVatPercentage();
         BigDecimal result = totalPrice.multiply(vat.divide(BigDecimal.valueOf(100)));
         return result;
     }

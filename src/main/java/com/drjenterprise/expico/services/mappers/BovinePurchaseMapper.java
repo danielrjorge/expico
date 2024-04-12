@@ -1,8 +1,8 @@
 package com.drjenterprise.expico.services.mappers;
 
 import com.drjenterprise.expico.entities.dao.bovines.BovinePurchaseDao;
-import com.drjenterprise.expico.entities.dto.request.BovinePurchaseREQ;
-import com.drjenterprise.expico.entities.dto.response.BovinePurchaseRES;
+import com.drjenterprise.expico.entities.dto.request.bovines.BovinePurchaseREQ;
+import com.drjenterprise.expico.entities.dto.response.bovines.BovinePurchaseRES;
 import com.drjenterprise.expico.exceptions.NifNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

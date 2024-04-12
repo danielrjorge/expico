@@ -1,4 +1,4 @@
-package com.drjenterprise.expico.entities.dto.response;
+package com.drjenterprise.expico.entities.dto.request.bovines;
 
 import com.drjenterprise.expico.entities.enums.BovineBreed;
 import com.drjenterprise.expico.entities.enums.BovineColor;
@@ -7,7 +7,7 @@ import com.drjenterprise.expico.entities.enums.Gender;
 
 import java.time.LocalDate;
 
-public class BovineRES {
+public class BovineREQ {
     private int bovineInternalId;
     private String bovineCode;
     private BovineBreed bovineBreed;
@@ -20,7 +20,7 @@ public class BovineRES {
     private String causeOfDeath;
     private String mothersCode;
     private String fathersCode;
-    private OwnerRES lastKnownOwner;
+    private Integer lastKnownOwnerNif;
 
     public int getBovineInternalId() {
         return bovineInternalId;
@@ -118,11 +118,11 @@ public class BovineRES {
         this.fathersCode = fathersCode;
     }
 
-    public OwnerRES getLastKnownOwner() {
-        return lastKnownOwner;
+    public Integer getLastKnownOwnerNif() {
+        return lastKnownOwnerNif;
     }
 
-    public void setLastKnownOwner(OwnerRES lastKnownOwner) {
-        this.lastKnownOwner = lastKnownOwner;
+    public void setLastKnownOwnerNif(Integer lastKnownOwnerNif) {
+        this.lastKnownOwnerNif = lastKnownOwnerNif;
     }
 }

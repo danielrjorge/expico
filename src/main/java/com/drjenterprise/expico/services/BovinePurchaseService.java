@@ -3,6 +3,7 @@ package com.drjenterprise.expico.services;
 import com.drjenterprise.expico.entities.dao.bovines.BovinePurchaseDao;
 import com.drjenterprise.expico.entities.dao.financial.FinancialMovementDao;
 import com.drjenterprise.expico.entities.dao.financial.VatAdjustmentDao;
+import com.drjenterprise.expico.entities.enums.MovementType;
 import com.drjenterprise.expico.repositories.BovinePurchaseRepository;
 import com.drjenterprise.expico.repositories.FinancialMovementRepository;
 import com.drjenterprise.expico.repositories.VatAdjustmentRepository;
@@ -43,6 +44,7 @@ public class BovinePurchaseService {
         FinancialMovementDao financialMovementDao = new FinancialMovementDao();
         financialMovementDao.setMovementDate(bovinePurchaseDao.getPurchaseDate());
         financialMovementDao.setMovementDebit(bovinePurchaseDao.getTotalPrice());
+        financialMovementDao.setMovementType(MovementType.COMPRA);
         FinancialMovementDao savedFinancialMovementDao = financialMovementRepository.save(financialMovementDao);
 
         VatAdjustmentDao vatAdjustmentDao = new VatAdjustmentDao();

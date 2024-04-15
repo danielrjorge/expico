@@ -4,7 +4,7 @@ import com.drjenterprise.expico.entities.dao.bovines.BovineDAO;
 import com.drjenterprise.expico.entities.dao.bovines.BovineSaleDao;
 import com.drjenterprise.expico.entities.dto.request.bovines.BovineSaleREQ;
 import com.drjenterprise.expico.entities.dto.response.bovines.BovineSaleRES;
-import com.drjenterprise.expico.exceptions.NifNotFoundException;
+import com.drjenterprise.expico.entities.enums.BovineStatus;
 import com.drjenterprise.expico.services.BovineSaleService;
 import com.drjenterprise.expico.services.BovineServices;
 import com.drjenterprise.expico.services.mappers.BovineSaleMapper;
@@ -54,24 +54,27 @@ public class BovineSaleController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         else {
-            try {
-                BovineSaleDao newBovineDao = bovineSaleMapper.convert(bovineSaleREQ);
-                //set the bovine to the Dao, done outside the mapper.
-                newBovineDao.setBovine(requestBovineDao);
+            //update the bovine status
+            updateBovineStatus(requestBovineDao);
 
-                BovineSaleDao addedBovineDao = bovineSaleService.createBovineSale(newBovineDao);
-                if(addedBovineDao != null) {
-                    BovineSaleRES response = bovineSaleMapper.convert(addedBovineDao);
-                    return new ResponseEntity<>(response, HttpStatus.CREATED);
-                }
-                else {
-                    return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-                }
-            } catch (NifNotFoundException e) {
-                logger.severe(e.getMessage());
+            BovineSaleDao newBovineDao = bovineSaleMapper.convert(bovineSaleREQ);
+            //set the bovine to the Dao, done outside the mapper.
+            newBovineDao.setBovine(requestBovineDao);
+
+            BovineSaleDao addedBovineDao = bovineSaleService.createBovineSale(newBovineDao);
+            if(addedBovineDao != null) {
+                BovineSaleRES response = bovineSaleMapper.convert(addedBovineDao);
+                return new ResponseEntity<>(response, HttpStatus.CREATED);
+            }
+            else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
         }
 
+    }
+
+    private void updateBovineStatus(BovineDAO bovineDao) {
+        bovineDao.setBovineStatus(BovineStatus.VENDIDO);
+        bovineServices.updateBovine(bovineDao);
     }
 }

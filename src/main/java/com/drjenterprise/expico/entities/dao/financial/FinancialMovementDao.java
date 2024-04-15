@@ -1,5 +1,6 @@
 package com.drjenterprise.expico.entities.dao.financial;
 
+import com.drjenterprise.expico.entities.enums.MovementType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 
@@ -17,6 +18,10 @@ public class FinancialMovementDao {
 
     @Column(name = "movement_date")
     private LocalDate movementDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "movement_type")
+    private MovementType movementType;
 
     @DecimalMin(value = "0.00", inclusive = true, message = "Price must be greater than or equal to 0.")
     @Column(name = "movement_credit", precision = 10, scale = 2)
@@ -56,5 +61,13 @@ public class FinancialMovementDao {
 
     public void setMovementDebit(BigDecimal movementDebit) {
         this.movementDebit = movementDebit;
+    }
+
+    public MovementType getMovementType() {
+        return movementType;
+    }
+
+    public void setMovementType(MovementType movementType) {
+        this.movementType = movementType;
     }
 }

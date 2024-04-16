@@ -1,8 +1,10 @@
 package com.drjenterprise.expico.controllers;
 
+import com.drjenterprise.expico.entities.dao.owner.OwnerDAO;
 import com.drjenterprise.expico.entities.dto.request.owner.OwnerREQ;
 import com.drjenterprise.expico.entities.dto.response.owner.OwnerRES;
 import com.drjenterprise.expico.services.OwnerServices;
+import com.drjenterprise.expico.services.mappers.OwnerMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,43 +18,62 @@ import java.util.List;
 public class OwnerController {
 
     private final OwnerServices ownerServices;
+    private final OwnerMapper ownerMapper;
 
     @Autowired
-    public OwnerController(OwnerServices ownerServices){
+    public OwnerController(OwnerServices ownerServices, OwnerMapper ownerMapper){
         this.ownerServices = ownerServices;
+        this.ownerMapper = ownerMapper;
     }
 
     @GetMapping("/")
     public ResponseEntity<List<OwnerRES>> listAllOwners(){
-        return new ResponseEntity<>(ownerServices.listAllOwners(), HttpStatus.OK);
+        List<OwnerRES> responseList = ownerServices.getAllOwners().stream()
+                .map(ownerMapper::convert)
+                .toList();
+
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<OwnerRES> getOwnerById(@PathVariable("id") Integer id){
-        OwnerRES existingOwnerRES = ownerServices.getOwnerById(id);
+        OwnerDAO existingOwnerDao = ownerServices.getOwnerById(id);
 
-        HttpStatus status = existingOwnerRES == null ? HttpStatus.NOT_FOUND: HttpStatus.OK;
-
-        return new ResponseEntity<>(existingOwnerRES, status);
+        if (existingOwnerDao != null) {
+            OwnerRES response = ownerMapper.convert(existingOwnerDao);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/nif/{nif}")
     public ResponseEntity<OwnerRES> getOwnerByNIF(@PathVariable("nif") Integer nif) {
-        OwnerRES existingOwnerRES = ownerServices.getOwnerByNIF(nif);
+        OwnerDAO existingOwnerDao = ownerServices.getOwnerByNIF(nif);
 
-        HttpStatus status = existingOwnerRES == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-
-        return new ResponseEntity<>(existingOwnerRES, status);
+        if (existingOwnerDao != null) {
+            OwnerRES response = ownerMapper.convert(existingOwnerDao);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/")
     public ResponseEntity<OwnerRES> addOwner(@Valid @RequestBody OwnerREQ newOwnerREQ){
 
-        OwnerRES addedOwnerRES = ownerServices.createOwner(newOwnerREQ);
+        OwnerDAO requestOwnerDao = ownerMapper.convert(newOwnerREQ);
+        OwnerDAO addedOwnerDao = ownerServices.createOwner(requestOwnerDao);
+        if (addedOwnerDao != null) {
+            OwnerRES response = ownerMapper.convert(addedOwnerDao);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
 
-        HttpStatus status = addedOwnerRES == null ? HttpStatus.BAD_REQUEST : HttpStatus.CREATED;
-
-        return new ResponseEntity<>(addedOwnerRES, status);
     }
 
     @PutMapping("/")
@@ -61,12 +82,16 @@ public class OwnerController {
         if(updatedOwnerREQ.getOwnerNIF() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The NIF was not specified in the body of the request");
         }
+        OwnerDAO requestOwnerDao = ownerMapper.convert(updatedOwnerREQ);
+        OwnerDAO updatedOwnerDao = ownerServices.updateOwner(requestOwnerDao);
 
-        OwnerRES ownerRES = ownerServices.updateOwner(updatedOwnerREQ);
-
-        HttpStatus status = ownerRES == null ? HttpStatus.NOT_FOUND: HttpStatus.OK;
-
-        return new ResponseEntity<>(ownerRES, status);
+        if (updatedOwnerDao != null) {
+            OwnerRES response = ownerMapper.convert(updatedOwnerDao);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{nif}")

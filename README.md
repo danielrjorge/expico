@@ -21,6 +21,7 @@ At this stage of development, the application has endpoints for:
 - Cattle existences
 - Cattle bought
 - Cattle sold
+- Cattle butchered
 - Owners
 
 This also includes the database to store these records, as well as the financial movements, including VAT, which were

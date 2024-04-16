@@ -1,12 +1,14 @@
 package com.drjenterprise.expico.entities.dto.request.bovines;
 
+import com.drjenterprise.expico.entities.dto.request.owner.OwnerREQ;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class BovineSaleREQ {
     private String bovineCode;
     private LocalDate saleDate;
-    private Integer buyersNif;
+    private OwnerREQ buyer;
     private BigDecimal totalPrice;
     private BigDecimal vatPercentage;
 
@@ -26,12 +28,12 @@ public class BovineSaleREQ {
         this.saleDate = saleDate;
     }
 
-    public Integer getBuyersNif() {
-        return buyersNif;
+    public OwnerREQ getBuyer() {
+        return buyer;
     }
 
-    public void setBuyersNif(Integer buyersNif) {
-        this.buyersNif = buyersNif;
+    public void setBuyer(OwnerREQ buyer) {
+        this.buyer = buyer;
     }
 
     public BigDecimal getTotalPrice() {

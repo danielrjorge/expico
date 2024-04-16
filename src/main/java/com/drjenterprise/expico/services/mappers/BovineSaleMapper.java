@@ -15,7 +15,7 @@ public class BovineSaleMapper {
     public BovineSaleDao convert(BovineSaleREQ request){
         BovineSaleDao dao = new BovineSaleDao();
         dao.setSaleDate(request.getSaleDate());
-        dao.setBuyersNif(request.getBuyersNif());
+        dao.setBuyersNif(request.getBuyer().getOwnerNIF());
         dao.setTotalPrice(request.getTotalPrice());
         dao.setVatPercentage(request.getVatPercentage());
         return dao;

@@ -7,6 +7,7 @@ import com.drjenterprise.expico.entities.dto.response.bovines.BovineButcherRES;
 import com.drjenterprise.expico.entities.enums.BovineStatus;
 import com.drjenterprise.expico.services.BovineButcherService;
 import com.drjenterprise.expico.services.BovineServices;
+import com.drjenterprise.expico.services.FarmBovineService;
 import com.drjenterprise.expico.services.mappers.BovineButcherMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,14 @@ public class BovineButcherController {
     private final BovineButcherService bovineButcherService;
     private final BovineButcherMapper bovineButcherMapper;
     private final BovineServices bovineServices;
+    private final FarmBovineService farmBovineService;
 
     @Autowired
-    public BovineButcherController(BovineButcherService bovineButcherService, BovineButcherMapper bovineButcherMapper, BovineServices bovineServices) {
+    public BovineButcherController(BovineButcherService bovineButcherService, BovineButcherMapper bovineButcherMapper, BovineServices bovineServices, FarmBovineService farmBovineService) {
         this.bovineButcherService = bovineButcherService;
         this.bovineButcherMapper = bovineButcherMapper;
         this.bovineServices = bovineServices;
+        this.farmBovineService = farmBovineService;
     }
 
     @GetMapping("/")
@@ -57,7 +60,7 @@ public class BovineButcherController {
         }
         else {
             //update the bovine status
-            updateBovineStatus(requestBovineDao);
+            updateBovineStatusAndRemoveFromFarm(requestBovineDao);
 
             BovineButcherDao newButcherDao = bovineButcherMapper.convert(request);
             //set the bovine to the Dao, done outside the mapper.
@@ -74,8 +77,11 @@ public class BovineButcherController {
         }
     }
 
-    private void updateBovineStatus(BovineDAO bovineDao) {
+    private void updateBovineStatusAndRemoveFromFarm(BovineDAO bovineDao) {
         bovineDao.setBovineStatus(BovineStatus.ABATIDO);
-        bovineServices.updateBovine(bovineDao);
+        BovineDAO updatedBovine = bovineServices.updateBovine(bovineDao);
+
+        // Remove from the farm bovines
+        farmBovineService.deleteFarmBovine(updatedBovine);
     }
 }

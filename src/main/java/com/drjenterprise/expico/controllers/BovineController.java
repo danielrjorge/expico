@@ -4,7 +4,9 @@ import com.drjenterprise.expico.entities.dao.bovines.BovineDAO;
 import com.drjenterprise.expico.entities.dto.request.bovines.BovineREQ;
 import com.drjenterprise.expico.entities.dto.response.bovines.BovineRES;
 import com.drjenterprise.expico.exceptions.NifNotFoundException;
+import com.drjenterprise.expico.initializer.ProfileOwner;
 import com.drjenterprise.expico.services.BovineServices;
+import com.drjenterprise.expico.services.FarmBovineService;
 import com.drjenterprise.expico.services.mappers.BovineMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +25,15 @@ public class BovineController {
 
     private final BovineServices bovineServices;
     private final BovineMapper bovineMapper;
+    private final FarmBovineService farmBovineService;
+    private final ProfileOwner profileOwner;
 
     @Autowired
-    public BovineController(BovineServices bovineServices, BovineMapper bovineMapper){
+    public BovineController(BovineServices bovineServices, BovineMapper bovineMapper, FarmBovineService farmBovineService, ProfileOwner profileOwner){
         this.bovineServices = bovineServices;
         this.bovineMapper = bovineMapper;
+        this.farmBovineService = farmBovineService;
+        this.profileOwner = profileOwner;
     }
 
     @GetMapping("/all")
@@ -80,6 +86,10 @@ public class BovineController {
             BovineDAO newBovineDAO = bovineMapper.convert(bovineREQ);
             BovineDAO addedBovineDao = bovineServices.createBovine(newBovineDAO);
             if(addedBovineDao != null) {
+                //add to the farm bovines if owner is the profile owner (checking by NIF)
+                if(addedBovineDao.getLastKnownOwner().getOwnerNIF() == profileOwner.getProfileOwnerNIF()){
+                    farmBovineService.addFarmBovine(addedBovineDao);
+                }
                 BovineRES addedBovineResponse = bovineMapper.convert(addedBovineDao);
                 return new ResponseEntity<>(addedBovineResponse, HttpStatus.OK);
             }
@@ -109,6 +119,14 @@ public class BovineController {
             BovineDAO updatedBovineDAO = bovineServices.updateBovine(bovineMapper.convert(updatedBovineREQ));
 
             if(updatedBovineDAO != null) {
+                //update farm bovine table according to owner. If the profile owner is not involved it does nothing
+                if(updatedBovineDAO.getLastKnownOwner().getOwnerNIF() == profileOwner.getProfileOwnerNIF()) {
+                    farmBovineService.addFarmBovine(updatedBovineDAO);
+                }
+                else {
+                    farmBovineService.deleteFarmBovine(updatedBovineDAO);
+                }
+
                 BovineRES updatedBovineResponse = bovineMapper.convert(updatedBovineDAO);
                 return new ResponseEntity<>(updatedBovineResponse, HttpStatus.OK);
             }
@@ -123,6 +141,7 @@ public class BovineController {
 
     @DeleteMapping("/deleteById/{id}")
     public ResponseEntity<Void> deleteBovine(@PathVariable("id") Integer id){
+        // Need to update farm bovine if the owner is the profile owner.
         return bovineServices.deleteBovineByInternalId(id);
     }
 }

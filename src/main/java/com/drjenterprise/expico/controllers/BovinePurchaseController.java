@@ -9,6 +9,7 @@ import com.drjenterprise.expico.exceptions.NifNotFoundException;
 import com.drjenterprise.expico.initializer.ProfileOwner;
 import com.drjenterprise.expico.services.BovinePurchaseService;
 import com.drjenterprise.expico.services.BovineServices;
+import com.drjenterprise.expico.services.FarmBovineService;
 import com.drjenterprise.expico.services.OwnerServices;
 import com.drjenterprise.expico.services.mappers.BovinePurchaseMapper;
 import jakarta.validation.Valid;
@@ -29,15 +30,17 @@ public class BovinePurchaseController {
     private final BovinePurchaseService bovinePurchaseService;
     private final BovinePurchaseMapper bovinePurchaseMapper;
     private final BovineServices bovineServices;
+    private final FarmBovineService farmBovineService;
     private final OwnerServices ownerServices;
     private final ProfileOwner profileOwner;
 
     @Autowired
     public BovinePurchaseController(BovinePurchaseService bovinePurchaseService,
-                                    BovinePurchaseMapper bovinePurchaseMapper, BovineServices bovineServices, OwnerServices ownerServices, ProfileOwner profileOwner) {
+                                    BovinePurchaseMapper bovinePurchaseMapper, BovineServices bovineServices, FarmBovineService farmBovineService, OwnerServices ownerServices, ProfileOwner profileOwner) {
         this.bovinePurchaseService = bovinePurchaseService;
         this.bovinePurchaseMapper = bovinePurchaseMapper;
         this.bovineServices = bovineServices;
+        this.farmBovineService = farmBovineService;
         this.ownerServices = ownerServices;
         this.profileOwner = profileOwner;
     }
@@ -67,6 +70,8 @@ public class BovinePurchaseController {
             OwnerDAO profileOwnerDao = ownerServices.getOwnerByNIF(profileOwner.getProfileOwnerNIF());
             savedBovineDao.setLastKnownOwner(profileOwnerDao);
             bovineServices.updateBovine(savedBovineDao);
+            // Add the bovine to the farm
+            farmBovineService.addFarmBovine(savedBovineDao);
 
             newBovinePurchaseDao.setBovine(savedBovineDao);
 

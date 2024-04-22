@@ -1,6 +1,6 @@
 package com.drjenterprise.expico.entities.dao.land;
 
-import com.drjenterprise.expico.entities.dao.bovines.BovineDAO;
+import com.drjenterprise.expico.entities.dao.bovines.FarmBovineDao;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
@@ -19,7 +19,7 @@ public class LandDao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pastureInternalId;
     @NotNull
-    @Column(unique = true)
+    @Column(name = "land_code", unique = true)
     private String landCode;
     private String gpsCoordinates;
     @DecimalMin(value = "0.00", inclusive = true, message = "Total Ha area must be greater than or equal to 0.")
@@ -30,7 +30,7 @@ public class LandDao {
 
     @OneToMany
     @JoinColumn (name = "bovines_in_pasture")
-    private List<BovineDAO> bovinesInPasture;
+    private List<FarmBovineDao> bovinesInPasture;
 
     public int getPastureInternalId() {
         return pastureInternalId;
@@ -64,11 +64,11 @@ public class LandDao {
         this.totalHa = totalHa;
     }
 
-    public List<BovineDAO> getBovinesInPasture() {
+    public List<FarmBovineDao> getBovinesInPasture() {
         return bovinesInPasture;
     }
 
-    public void setBovinesInPasture(List<BovineDAO> bovinesInPasture) {
+    public void setBovinesInPasture(List<FarmBovineDao> bovinesInPasture) {
         this.bovinesInPasture = bovinesInPasture;
     }
 

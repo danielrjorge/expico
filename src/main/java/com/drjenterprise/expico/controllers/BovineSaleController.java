@@ -9,6 +9,7 @@ import com.drjenterprise.expico.entities.enums.BovineStatus;
 import com.drjenterprise.expico.initializer.ProfileOwner;
 import com.drjenterprise.expico.services.BovineSaleService;
 import com.drjenterprise.expico.services.BovineServices;
+import com.drjenterprise.expico.services.FarmBovineService;
 import com.drjenterprise.expico.services.OwnerServices;
 import com.drjenterprise.expico.services.mappers.BovineSaleMapper;
 import com.drjenterprise.expico.services.mappers.OwnerMapper;
@@ -29,16 +30,18 @@ public class BovineSaleController {
     private final BovineSaleService bovineSaleService;
     private final BovineSaleMapper bovineSaleMapper;
     private final BovineServices bovineServices;
+    private final FarmBovineService farmBovineService;
     private final OwnerServices ownerServices;
     private final OwnerMapper ownerMapper;
     private final ProfileOwner profileOwner;
 
     @Autowired
     public BovineSaleController(BovineSaleService bovineSaleService, BovineSaleMapper bovineSaleMapper,
-                                BovineServices bovineServices, OwnerServices ownerServices, OwnerMapper ownerMapper, ProfileOwner profileOwner) {
+                                BovineServices bovineServices, FarmBovineService farmBovineService, OwnerServices ownerServices, OwnerMapper ownerMapper, ProfileOwner profileOwner) {
         this.bovineSaleService = bovineSaleService;
         this.bovineSaleMapper = bovineSaleMapper;
         this.bovineServices = bovineServices;
+        this.farmBovineService = farmBovineService;
         this.ownerServices = ownerServices;
         this.ownerMapper = ownerMapper;
         this.profileOwner = profileOwner;
@@ -70,7 +73,7 @@ public class BovineSaleController {
             updateBovineStatus(requestBovineDao);
 
             //update the bovine owner
-            updateBovineOwner(requestBovineDao, bovineSaleREQ);
+            BovineDAO updateBovineDao = updateBovineOwner(requestBovineDao, bovineSaleREQ);
 
             BovineSaleDao newBovineDao = bovineSaleMapper.convert(bovineSaleREQ);
             //set the bovine to the Dao, done outside the mapper.
@@ -78,6 +81,9 @@ public class BovineSaleController {
 
             BovineSaleDao addedBovineDao = bovineSaleService.createBovineSale(newBovineDao);
             if(addedBovineDao != null) {
+                // remove bovine from the farm bovines
+                farmBovineService.deleteFarmBovine(updateBovineDao);
+
                 BovineSaleRES response = bovineSaleMapper.convert(addedBovineDao);
                 return new ResponseEntity<>(response, HttpStatus.CREATED);
             }
@@ -99,7 +105,7 @@ public class BovineSaleController {
      * @param bovineDAO
      * @param saleREQ
      */
-    private void updateBovineOwner(BovineDAO bovineDAO, BovineSaleREQ saleREQ) {
+    private BovineDAO updateBovineOwner(BovineDAO bovineDAO, BovineSaleREQ saleREQ) {
         OwnerDAO convertedOwnerDao = ownerMapper.convert(saleREQ.getBuyer());
         OwnerDAO existingOwnerDao = ownerServices.getOwnerByNIF(convertedOwnerDao.getOwnerNIF());
         // might want in the future to check if owner comes in with more fields than are stored, update the owner
@@ -109,6 +115,6 @@ public class BovineSaleController {
             OwnerDAO newOwnerDao = ownerServices.createOwner(convertedOwnerDao);
             bovineDAO.setLastKnownOwner(newOwnerDao);
         }
-        bovineServices.updateBovine(bovineDAO);
+        return bovineServices.updateBovine(bovineDAO);
     }
 }

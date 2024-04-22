@@ -3,6 +3,7 @@ package com.drjenterprise.expico.services.mappers;
 import com.drjenterprise.expico.entities.dao.owner.OwnerDAO;
 import com.drjenterprise.expico.entities.dto.request.owner.OwnerREQ;
 import com.drjenterprise.expico.entities.dto.response.owner.OwnerRES;
+import com.drjenterprise.expico.initializer.ProfileOwner;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -32,5 +33,16 @@ public class OwnerMapper {
         response.setOwnerCellNumber(dao.getOwnerCellNumber());
         response.setOwnerEmail(dao.getOwnerEmail());
         return response;
+    }
+
+    public OwnerDAO convert(ProfileOwner profileOwner) {
+        OwnerDAO dao = new OwnerDAO();
+        dao.setOwnerInternalId(profileOwner.getProfileOwnerInternalId());
+        dao.setOwnerGovId(profileOwner.getProfileOwnerGovId());
+        dao.setOwnerNIF(profileOwner.getProfileOwnerNIF());
+        dao.setOwnerName(profileOwner.getProfileOwnerName());
+        dao.setOwnerCellNumber(profileOwner.getProfileOwnerCellNumber());
+        dao.setOwnerEmail(profileOwner.getProfileOwnerEmail());
+        return dao;
     }
 }

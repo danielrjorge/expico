@@ -30,10 +30,19 @@ public class BovineController {
         this.bovineMapper = bovineMapper;
     }
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<BovineRES>> getAllBovines(){
 
         List<BovineRES> responseList = bovineServices.getAllBovines().stream()
+                .map(bovineMapper::convert)
+                .toList();
+
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
+    @GetMapping("/owned")
+    public ResponseEntity<List<BovineRES>> getOwnedBovines(){
+        List<BovineRES> responseList = bovineServices.getAllOwnedBovines().stream()
                 .map(bovineMapper::convert)
                 .toList();
 

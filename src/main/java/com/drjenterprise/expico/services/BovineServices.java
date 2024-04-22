@@ -1,7 +1,9 @@
 package com.drjenterprise.expico.services;
 
 import com.drjenterprise.expico.entities.dao.bovines.BovineDAO;
+import com.drjenterprise.expico.initializer.ProfileOwner;
 import com.drjenterprise.expico.repositories.BovineRepository;
+import com.drjenterprise.expico.services.mappers.OwnerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,15 +14,23 @@ import java.util.logging.Logger;
 @Service
 public class BovineServices {
     private final BovineRepository bovineRepository;
+    private final ProfileOwner profileOwner;
+    private final OwnerMapper ownerMapper;
     private static final Logger logger = Logger.getLogger(BovineServices.class.getName());
 
     @Autowired
-    public BovineServices(BovineRepository bovineRepository){
+    public BovineServices(BovineRepository bovineRepository, ProfileOwner profileOwner, OwnerMapper ownerMapper){
         this.bovineRepository = bovineRepository;
+        this.profileOwner = profileOwner;
+        this.ownerMapper = ownerMapper;
     }
 
     public List<BovineDAO> getAllBovines(){
         return bovineRepository.findAll();
+    }
+
+    public List<BovineDAO> getAllOwnedBovines() {
+        return bovineRepository.findAllByLastKnownOwner(ownerMapper.convert(profileOwner)).orElse(null);
     }
 
     public BovineDAO getBovineByInternalId(int id){

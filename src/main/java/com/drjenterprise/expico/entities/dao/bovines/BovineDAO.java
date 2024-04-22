@@ -1,5 +1,6 @@
 package com.drjenterprise.expico.entities.dao.bovines;
 
+import com.drjenterprise.expico.entities.dao.land.LandDao;
 import com.drjenterprise.expico.entities.dao.owner.OwnerDAO;
 import com.drjenterprise.expico.entities.enums.BovineBreed;
 import com.drjenterprise.expico.entities.enums.BovineColor;
@@ -57,6 +58,10 @@ public class BovineDAO {
     @ManyToOne
     @JoinColumn(name = "last_known_owner", referencedColumnName = "owner_nif")
     private OwnerDAO lastKnownOwner;
+
+    @ManyToOne
+    @JoinColumn(name = "current_pasture")
+    private LandDao currentPasture;
 
 
     public int getBovineInternalId() {
@@ -163,4 +168,11 @@ public class BovineDAO {
         this.lastKnownOwner = lastKnownOwner;
     }
 
+    public LandDao getCurrentPasture() {
+        return currentPasture;
+    }
+
+    public void setCurrentPasture(LandDao currentPasture) {
+        this.currentPasture = currentPasture;
+    }
 }

@@ -10,7 +10,6 @@ import com.drjenterprise.expico.initializer.ProfileOwner;
 import com.drjenterprise.expico.services.BovinePurchaseService;
 import com.drjenterprise.expico.services.BovineServices;
 import com.drjenterprise.expico.services.OwnerServices;
-import com.drjenterprise.expico.services.mappers.BovineMapper;
 import com.drjenterprise.expico.services.mappers.BovinePurchaseMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +29,15 @@ public class BovinePurchaseController {
     private final BovinePurchaseService bovinePurchaseService;
     private final BovinePurchaseMapper bovinePurchaseMapper;
     private final BovineServices bovineServices;
-    private final BovineMapper bovineMapper;
     private final OwnerServices ownerServices;
     private final ProfileOwner profileOwner;
 
     @Autowired
     public BovinePurchaseController(BovinePurchaseService bovinePurchaseService,
-                                    BovinePurchaseMapper bovinePurchaseMapper, BovineServices bovineServices, BovineMapper bovineMapper, OwnerServices ownerServices, ProfileOwner profileOwner) {
+                                    BovinePurchaseMapper bovinePurchaseMapper, BovineServices bovineServices, OwnerServices ownerServices, ProfileOwner profileOwner) {
         this.bovinePurchaseService = bovinePurchaseService;
         this.bovinePurchaseMapper = bovinePurchaseMapper;
         this.bovineServices = bovineServices;
-        this.bovineMapper = bovineMapper;
         this.ownerServices = ownerServices;
         this.profileOwner = profileOwner;
     }

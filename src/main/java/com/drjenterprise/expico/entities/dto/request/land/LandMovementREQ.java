@@ -6,7 +6,6 @@ public class LandMovementREQ {
 
     private LocalDate landMovementDate;
     private String bovineCode;
-    private String originLandCode;
     private String destinationLandCode;
 
     public LocalDate getLandMovementDate() {
@@ -23,14 +22,6 @@ public class LandMovementREQ {
 
     public void setBovineCode(String bovineCode) {
         this.bovineCode = bovineCode;
-    }
-
-    public String getOriginLandCode() {
-        return originLandCode;
-    }
-
-    public void setOriginLandCode(String originLandCode) {
-        this.originLandCode = originLandCode;
     }
 
     public String getDestinationLandCode() {

@@ -1,17 +1,12 @@
 package com.drjenterprise.expico.entities.dto.response.land;
 
-import com.drjenterprise.expico.entities.dto.response.bovines.BovineRES;
-
 import java.math.BigDecimal;
-import java.util.List;
 
 public class LandRES {
     private String landCode;
     private String gpsCoordinates;
     private BigDecimal totalHa;
     private boolean isPasture;
-
-    private List<BovineRES> bovinesInPasture;
 
     public String getLandCode() {
         return landCode;
@@ -45,11 +40,4 @@ public class LandRES {
         isPasture = pasture;
     }
 
-    public List<BovineRES> getBovinesInPasture() {
-        return bovinesInPasture;
-    }
-
-    public void setBovinesInPasture(List<BovineRES> bovinesInPasture) {
-        this.bovinesInPasture = bovinesInPasture;
-    }
 }

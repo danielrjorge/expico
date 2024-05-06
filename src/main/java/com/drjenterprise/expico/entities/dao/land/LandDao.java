@@ -1,13 +1,11 @@
 package com.drjenterprise.expico.entities.dao.land;
 
-import com.drjenterprise.expico.entities.dao.bovines.FarmBovineDao;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Table(name = "l100")
@@ -27,10 +25,6 @@ public class LandDao {
     @NotNull(message = "The 'pasture' field is required")
     @JsonProperty("pasture")
     private boolean isPasture;
-
-    @OneToMany
-    @JoinColumn (name = "bovines_in_pasture")
-    private List<FarmBovineDao> bovinesInPasture;
 
     public int getPastureInternalId() {
         return pastureInternalId;
@@ -62,14 +56,6 @@ public class LandDao {
 
     public void setTotalHa(BigDecimal totalHa) {
         this.totalHa = totalHa;
-    }
-
-    public List<FarmBovineDao> getBovinesInPasture() {
-        return bovinesInPasture;
-    }
-
-    public void setBovinesInPasture(List<FarmBovineDao> bovinesInPasture) {
-        this.bovinesInPasture = bovinesInPasture;
     }
 
     public boolean isPasture() {

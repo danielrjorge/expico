@@ -1,6 +1,5 @@
 package com.drjenterprise.expico.services.mappers;
 
-import com.drjenterprise.expico.entities.dao.bovines.FarmBovineDao;
 import com.drjenterprise.expico.entities.dao.land.LandDao;
 import com.drjenterprise.expico.entities.dto.request.land.LandREQ;
 import com.drjenterprise.expico.entities.dto.response.land.LandRES;
@@ -28,9 +27,6 @@ public class LandMapper {
         response.setGpsCoordinates(dao.getGpsCoordinates());
         response.setTotalHa(dao.getTotalHa());
         response.setPasture(dao.isPasture());
-        if (dao.getBovinesInPasture() != null) {
-            response.setBovinesInPasture(dao.getBovinesInPasture().stream().map(FarmBovineDao::getBovine).map(bovineMapper::convert).toList());
-        }
         return response;
     }
 }

@@ -1,6 +1,7 @@
 package com.drjenterprise.expico.controllers;
 
 import com.drjenterprise.expico.entities.dao.bovines.BovineDAO;
+import com.drjenterprise.expico.entities.dao.bovines.FarmBovineDao;
 import com.drjenterprise.expico.entities.dto.request.bovines.BovineREQ;
 import com.drjenterprise.expico.entities.dto.response.bovines.BovineRES;
 import com.drjenterprise.expico.exceptions.NifNotFoundException;
@@ -55,6 +56,13 @@ public class BovineController {
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
+    //TODO might want to consider adding a Response to the farm bovine DAO to not expose the DAO
+    @GetMapping("/farm")
+    public ResponseEntity<List<FarmBovineDao>> getAllFarmBovines(){
+        List<FarmBovineDao> responseList = farmBovineService.getAllFarmBovines();
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
     @GetMapping("/id/{id}")
     public ResponseEntity<BovineRES> getBovineByInternalId(@PathVariable("id") Integer id){
         BovineDAO existingBovineDao = bovineServices.getBovineByInternalId(id);
@@ -77,6 +85,16 @@ public class BovineController {
             BovineRES existingBovineRES = bovineMapper.convert(existingBovineDao);
             return new ResponseEntity<>(existingBovineRES, HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/land/{landCode}")
+    public ResponseEntity<List<BovineRES>> getBovineInLand(@PathVariable("landCode") String landCode) {
+        List<BovineRES> responseList = farmBovineService.getAllFarmBovinesByLand(landCode).stream()
+                .map(FarmBovineDao::getBovine)
+                .map(bovineMapper::convert)
+                .toList();
+
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
     @PostMapping("/")

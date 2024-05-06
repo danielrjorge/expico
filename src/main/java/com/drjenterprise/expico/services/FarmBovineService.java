@@ -25,6 +25,10 @@ public class FarmBovineService {
         return farmBovineRepository.findAll();
     }
 
+    public List<FarmBovineDao> getAllFarmBovinesByLand(String landCode) {
+        return farmBovineRepository.findAllByCurrentLandLandCode(landCode);
+    }
+
     public FarmBovineDao getFarmBovineByCode(String code) {
         return farmBovineRepository.findByBovineBovineCode(code);
     }
@@ -41,6 +45,18 @@ public class FarmBovineService {
             newFarmBovine.setBovine(bovine);
             return farmBovineRepository.save(newFarmBovine);
         }
+    }
+
+    public FarmBovineDao updateFarmBovine(FarmBovineDao farmBovineDao) {
+        FarmBovineDao existingFarmBovine = farmBovineRepository.findByBovineBovineCode(farmBovineDao.getBovine().getBovineCode());
+        if (existingFarmBovine == null) {
+            logger.severe("UPDATE ERROR: A bovine with the code '" + farmBovineDao.getBovine().getBovineCode() + "' is not part of the farm!");
+            return null;
+        }
+        else {
+            return farmBovineRepository.save(farmBovineDao);
+        }
+
     }
 
     public boolean deleteFarmBovine(BovineDAO bovineDAO) {

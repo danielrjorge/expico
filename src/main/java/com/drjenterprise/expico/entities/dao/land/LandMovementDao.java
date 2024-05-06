@@ -1,6 +1,6 @@
 package com.drjenterprise.expico.entities.dao.land;
 
-import com.drjenterprise.expico.entities.dao.bovines.BovineDAO;
+import com.drjenterprise.expico.entities.dao.bovines.FarmBovineDao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,16 +18,16 @@ public class LandMovementDao {
     private LocalDate landMovementDate;
 
     @NotNull
-    @OneToOne
-    @JoinColumn(name = "bovine")
-    private BovineDAO bovine;
+    @ManyToOne
+    @JoinColumn(name = "farm_bovine")
+    private FarmBovineDao farmBovine;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "origin_land")
     private LandDao previousLand;
 
     @NotNull
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "destination_land")
     private LandDao destinationLand;
 
@@ -47,12 +47,12 @@ public class LandMovementDao {
         this.landMovementDate = landMovementDate;
     }
 
-    public BovineDAO getBovine() {
-        return bovine;
+    public FarmBovineDao getFarmBovine() {
+        return farmBovine;
     }
 
-    public void setBovine(BovineDAO bovine) {
-        this.bovine = bovine;
+    public void setFarmBovine(FarmBovineDao farmBovine) {
+        this.farmBovine = farmBovine;
     }
 
     public LandDao getPreviousLand() {

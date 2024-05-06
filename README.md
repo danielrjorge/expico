@@ -23,13 +23,14 @@ At this stage of development, the application has endpoints for:
 - Cattle sold
 - Cattle butchered
 - Owners
+- Land
+- Land movements of cattle
 
 This also includes the database to store these records, as well as the financial movements, including VAT, which were
 done in conjunction with the cattle buys and sales, but don't have an exposed endpoint by themselves at this stage.
 
 ### Next steps
 - Improve existing endpoints capabilities
-- Implement land/pasture endpoint
 - Build web front for interactions
 
 Made with Java and Spring Boot, MySql database.

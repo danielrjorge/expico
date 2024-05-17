@@ -25,7 +25,7 @@ public class OwnerDataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        File profileOwnerFile = new File("src/main/resources/static/DataInitialization/profile_owner.json");
+        File profileOwnerFile = new File("backend/src/main/resources/static/DataInitialization/profile_owner.json");
 
         if(profileOwnerFile.exists()) {
             try {

@@ -1,0 +1,9 @@
+.main-content {
+    flex: 1; /* Take up remaining space */
+    transition: margin-left 0.3s ease; /* Smooth transition */
+  }
+  
+  .sidebar-open {
+    margin-left: 240px; /* Adjust margin to account for open sidebar width */
+  }
+  

@@ -158,9 +158,16 @@ public class BovineController {
         }
     }
 
-    @DeleteMapping("/deleteById/{id}")
-    public ResponseEntity<Void> deleteBovine(@PathVariable("id") Integer id){
-        // Need to update farm bovine if the owner is the profile owner.
-        return bovineServices.deleteBovineByInternalId(id);
+    @DeleteMapping("/{code}")
+    public ResponseEntity<Void> deleteBovineByCode(@PathVariable("code") String code){
+        // Need to delete farm bovine if the owner is the profile owner.
+        // Check if bovine is a farm bovine
+
+        FarmBovineDao farmBovineDao =  farmBovineService.getFarmBovineByCode(code);
+        if(farmBovineDao != null) {
+            farmBovineService.deleteFarmBovine(farmBovineDao.getBovine());
+        }
+
+        return bovineServices.deleteBovineByCode(code);
     }
 }

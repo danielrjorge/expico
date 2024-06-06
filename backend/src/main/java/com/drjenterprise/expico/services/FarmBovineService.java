@@ -59,16 +59,14 @@ public class FarmBovineService {
 
     }
 
-    public boolean deleteFarmBovine(BovineDAO bovineDAO) {
+    public void deleteFarmBovine(BovineDAO bovineDAO) {
         FarmBovineDao existingFarmBovine = farmBovineRepository.findByBovineBovineCode(bovineDAO.getBovineCode());
 
         if (existingFarmBovine != null) {
             farmBovineRepository.delete(existingFarmBovine);
-            return true;
         }
         else {
             logger.severe("A bovine with the code '" + bovineDAO.getBovineCode() + "' does not exist in the farm bovine table! Delete failed!");
-            return false;
         }
     }
 }

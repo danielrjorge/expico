@@ -65,7 +65,6 @@ public class BovineServices {
 
         if(existingBovine != null){
             return bovineRepository.save(updateBovineDao);
-
         }
         else {
             logger.warning("No bovine exists in the database with the bovine code "+updateBovineDao.getBovineCode()+"!");
@@ -73,14 +72,14 @@ public class BovineServices {
         }
     }
 
-    public ResponseEntity<Void> deleteBovineByInternalId(Integer id){
-        BovineDAO bovineDAOToDelete = bovineRepository.findById(id).orElse(null);
+    public ResponseEntity<Void> deleteBovineByCode(String code){
+        BovineDAO bovineDAOToDelete = bovineRepository.findByBovineCode(code).orElse(null);
         if (bovineDAOToDelete != null){
             bovineRepository.delete(bovineDAOToDelete);
             return ResponseEntity.ok().build();
         }
         else {
-            logger.warning("No bovine exists in the database with the bovine internal id "+id+"!");
+            logger.warning("No bovine exists in the database with the bovine code "+code+"!");
             return ResponseEntity.badRequest().build();
         }
     }

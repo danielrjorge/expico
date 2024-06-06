@@ -8,6 +8,7 @@ const CustomAppBar = () => {
     const { language } = useLanguage();
   
     return (
+      <Box sx={{display: "flex", flexDirection: "column"}}>
         <AppBar position="static" sx={{ backgroundColor: language === 'en' ? 'default' : '#4caf50' }}>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -18,6 +19,7 @@ const CustomAppBar = () => {
           </Box>
         </Toolbar>
       </AppBar>
+      </Box>
     );
   };
 

@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { addBovine } from "../services/api/api";
-import CustomAppBar from "../components/CustomAppbar";
 import { useLanguage } from "../contexts/LanguageContext";
 const AddBovine = () => {
   const navigate = useNavigate();
@@ -25,6 +24,8 @@ const AddBovine = () => {
   const [mothersCode, setMothersCode] = useState("");
   const [fathersCode, setFathersCode] = useState("");
   const [lastKnownOwnerNif, setLastKnownOwnerNif] = useState(0);
+
+  const [errorDate, setErrorDate] = useState(false);
 
   const [alert, setAlert] = useState({ type: "", message: "" });
 
@@ -86,22 +87,37 @@ const AddBovine = () => {
     },
   ];
 
+  const today = new Date();
+
+  const handleErrorDate = () => {
+    setErrorDate(new Date(bovineBirthDate) >= today);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const data = {
-        bovineCode: bovineCode,
-        bovineBreed: bovineBreed,
-        bovineColor: bovineColor,
-        bovineGender: bovineGender,
-        bovineBirthDate: bovineBirthDate,
-        bovineStatus: bovineStatus,
-        bovineName: bovineName,
-        mothersCode: mothersCode,
-        fathersCode: fathersCode,
-        lastKnownOwnerNif: lastKnownOwnerNif,
+        'bovineCode': bovineCode,
+        'bovineBreed': bovineBreed,
+        'bovineColor': bovineColor,
+        'bovineGender': bovineGender,
+        'bovineBirthDate': bovineBirthDate,
+        'bovineStatus': bovineStatus,
+        'bovineName': bovineName,
+        'mothersCode': mothersCode,
+        'fathersCode': fathersCode,
+        'lastKnownOwnerNif': lastKnownOwnerNif,
       };
-      const response = await addBovine(data);
+
+      if (errorDate) {
+        setAlert({
+          type: "warning",
+          message: "Birth date is incorrect!",
+        });
+        return;
+      }
+
+      await addBovine(data);
       setAlert({
         type: "success",
         message: translations.bovineAddedSuccessfully,
@@ -114,7 +130,6 @@ const AddBovine = () => {
 
   return (
     <Container>
-      <CustomAppBar />
       <Box sx={{ mt: 3 }}>
         <Typography variant="h4" gutterBottom>
           {translations.addBovine}
@@ -219,13 +234,16 @@ const AddBovine = () => {
             <TextField
               label={translations.bovineBirthDate}
               name={translations.bovineBirthDate}
-              value={bovineBirthDate}
+              defaultValue=""
               onChange={(e) => {
                 setBovineBirthDate(e.target.value);
+                handleErrorDate();
               }}
               fullWidth
               InputLabelProps={{ shrink: true }}
               required
+              error = {errorDate}
+              helperText= { errorDate ? "The date you entered is invalid!" : "" }
               type="date"
               sx={{ mb: 2 }}
             />

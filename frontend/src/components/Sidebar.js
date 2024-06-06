@@ -4,11 +4,9 @@ import CowIcon from '@mui/icons-material/LocalFlorist';
 import OwnerIcon from '@mui/icons-material/People';
 import LandIcon from '@mui/icons-material/Terrain';
 import MovementIcon from '@mui/icons-material/SwapHoriz';
-import useStyles from '../styles/sidebarStyles';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Sidebar = ({ onSelect }) => {
-  const classes = useStyles();
   const { translations } = useLanguage();
 
   const menuItems = [
@@ -19,25 +17,29 @@ const Sidebar = ({ onSelect }) => {
     { key: 'landMovements', icon: <MovementIcon />, text: translations.landMovements },
   ];
 
+  const drawerWidth = 250;
+
   return (
+    
     <Drawer
       variant="permanent"
-      className={classes.drawer}
-      classes={{
-        paper: classes.drawerPaper,
-      }}
+      sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+        }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 2 }}>
-        <Typography variant="h6" className={classes.expicoText}>
-          Expico
+        <Typography variant="h6">
+          LOGO PLACEHOLDER
         </Typography>
       </Box>
       <Divider sx={{ backgroundColor: '#4B566B' }} />
       <List>
         {menuItems.map((item) => (
-          <ListItemButton key={item.key} onClick={() => onSelect(item.key)} className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} className={classes.listItemText} />
+          <ListItemButton key={item.key} onClick={() => onSelect(item.key)}>
+            <ListItemIcon >{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
           </ListItemButton>
         ))}
       </List>

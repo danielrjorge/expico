@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Container, Box, Typography, Button } from '@mui/material';
 import Sidebar from '../components/Sidebar';
 import { useLanguage } from '../contexts/LanguageContext';
-import CustomAppBar from '../components/CustomAppbar';
 import { useNavigate } from 'react-router-dom';
+import CssBaseline from "@mui/material/CssBaseline";
 
 const Main = () => {
 
@@ -72,7 +72,7 @@ const Main = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <CustomAppBar />
+      <CssBaseline />
       <Box sx={{ display: 'flex', flex: 1 }}>
         <Sidebar onSelect={setSelectedItem} />
         <Container>

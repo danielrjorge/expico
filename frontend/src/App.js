@@ -6,6 +6,8 @@ import AddBovine from './pages/AddBovine';
 import { LanguageProvider } from './contexts/LanguageContext';
 import CssBaseline from '@mui/material/CssBaseline';
 import CustomAppBar from './components/CustomAppbar';
+import GetAllBovines from './pages/GetAllBovines';
+import UpdateBovine from './pages/UpdateBovine';
 
 const App = () => (
   <LanguageProvider>
@@ -17,6 +19,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/add-bovine" element={<AddBovine />} />
+          <Route path="/update-bovine" element={<UpdateBovine />} />
+          <Route path="/get-all-bovines" element={<GetAllBovines />} />
           {/* Define other routes here */}
         </Routes>
         </Box>

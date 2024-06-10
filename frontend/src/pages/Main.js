@@ -19,8 +19,8 @@ const Main = () => {
             <Button variant="contained" color="primary" sx={{ marginRight: 2 }} onClick={() => navigate('/add-bovine')}>
               {translations.addBovine}
             </Button>
-            <Button variant="contained" color="secondary" onClick={() => alert('Navigate to Get Bovines')}>
-              {translations.getAllBovines}
+            <Button variant="contained" color="secondary" onClick={() => navigate('/get-all-bovines')}>
+              {translations.allBovines}
             </Button>
           </Box>
         );

@@ -13,7 +13,7 @@ export const getBovineByCode = (bovineCode) => api.get(`/bovines/id/${bovineCode
 export const getBovinesInLand = (landCode) => api.get(`/bovines/land/${landCode}`);
 export const addBovine = (bovine) => api.post('/bovines/', bovine);
 export const updateBovine = (bovine) => api.put('/bovines/', bovine);
-export const deleteBovine = (bovineId) => api.delete(`/bovines/deleteById/${bovineId}`);
+export const deleteBovine = (bovineCode) => api.delete(`/bovines/${bovineCode}`);
 
 // Bovine Purchases
 export const getAllBovinePurchases = () => api.post('/bovines/purchases');

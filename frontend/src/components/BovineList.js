@@ -11,23 +11,26 @@ import { Link } from "react-router-dom";
 
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
+import DeleteAlertDialog from "./DeleteAlertDialog";
 
 export default function BovineList({ bovineDataArray }) {
   const { translations } = useLanguage();
 
-
   const setUpdateData = (data) => {
-    localStorage.setItem('updateBovineCode', data.bovineCode);
-    localStorage.setItem('updateBovineBreed', data.bovineBreed);
-    localStorage.setItem('updateBovineGender', data.bovineGender);
-    localStorage.setItem('updateBovineColor', data.bovineColor);
-    localStorage.setItem('updateBovineBirthDate', data.bovineBirthDate);
-    localStorage.setItem('updateBovineStatus', data.bovineStatus)
-    localStorage.setItem('updateBovineName', data.bovineName)
-    localStorage.setItem('updateBovineMothersCode', data.mothersCode);
-    localStorage.setItem('updateBovineFathersCode', data.fathersCode);
-    localStorage.setItem('updateBovineLastOwnerNif', data.lastKnownOwner.ownerNIF);
- }
+    localStorage.setItem("updateBovineCode", data.bovineCode);
+    localStorage.setItem("updateBovineBreed", data.bovineBreed);
+    localStorage.setItem("updateBovineGender", data.bovineGender);
+    localStorage.setItem("updateBovineColor", data.bovineColor);
+    localStorage.setItem("updateBovineBirthDate", data.bovineBirthDate);
+    localStorage.setItem("updateBovineStatus", data.bovineStatus);
+    localStorage.setItem("updateBovineName", data.bovineName);
+    localStorage.setItem("updateBovineMothersCode", data.mothersCode);
+    localStorage.setItem("updateBovineFathersCode", data.fathersCode);
+    localStorage.setItem(
+      "updateBovineLastOwnerNif",
+      data.lastKnownOwner.ownerNIF
+    );
+  };
 
   function handleIncomingValues(value) {
     switch (value) {
@@ -123,24 +126,24 @@ export default function BovineList({ bovineDataArray }) {
               <TableCell align="right">
                 {row.lastKnownOwner.ownerName}
               </TableCell>
-              <Box sx={{display: "flex", flexDirection:"column", justifyContent: "space-between"}}>
-              <Link to='/update-bovine'>
-                <Button
-                    sx={{ marginTop:1, marginBottom: 1 }}
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setUpdateData(row)}
-                >
-                  {translations.update}
-                </Button>
-            </Link>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => alert("/")}
-                >
-                  {translations.delete}
-                </Button>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Link to="/update-bovine">
+                  <Button
+                    sx={{ marginTop: 1, marginBottom: 1 }}
+                    variant="contained"
+                    color="info"
+                    onClick={() => setUpdateData(row)}
+                  >
+                    {translations.update}
+                  </Button>
+                </Link>
+                <DeleteAlertDialog bovineCode={row.bovineCode} />
               </Box>
             </TableRow>
           ))}

@@ -20,6 +20,10 @@ export default function DeleteAlertDialog( {bovineCode} ) {
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleCloseAndDelete = () => {
     handleDelete();
     window.location.reload(false);
     setOpen(false);
@@ -57,7 +61,7 @@ export default function DeleteAlertDialog( {bovineCode} ) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{translations.cancel}</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={handleCloseAndDelete} autoFocus>
             {translations.delete}
           </Button>
         </DialogActions>

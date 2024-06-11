@@ -38,7 +38,7 @@ const Main = () => {
             <Button variant="contained" color="primary" sx={{ marginRight: 2 }} onClick={() => navigate('/add-owner')}>
               {translations.addOwner}
             </Button>
-            <Button variant="contained" color="secondary" onClick={() => alert('Navigate to Get Owners')}>
+            <Button variant="contained" color="secondary" onClick={() => navigate('/get-all-owners')}>
               {translations.getAllOwners}
             </Button>
           </Box>

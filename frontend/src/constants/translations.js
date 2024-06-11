@@ -5,7 +5,7 @@ const translations = {
       allBovines: 'All Bovines',
       getAllBovines: 'Get All Bovines',
       updateBovine: 'Update Bovine',
-      //owner
+      // owner
       addOwner: 'Add Owner',
       getAllOwners: 'Get All Owners',
       ownerAdded: ' was added successfully',
@@ -15,12 +15,13 @@ const translations = {
       ownerNIF: 'Fiscal number',
       cellNumber: 'Cell number',
       email: 'Email',
+      owners: 'Owners',
+      // land
       addLand: 'Add Land',
       getAllLands: 'Get All Lands',
       moveBovine: 'Move Bovine',
       getAllMovements: 'Get All Movements',
       cattle: 'Cattle',
-      owners: 'Owners',
       land: 'Land',
       landMovements: 'Land Movements',
       allCattle: 'All Cattle',
@@ -74,7 +75,7 @@ const translations = {
       allBovines: 'Todos os Bovinos',
       getAllBovines: 'Obter Todos os Bovinos',
       updateBovine: 'Atualizar Bovino',
-      //owner
+      // Proprietarios
       addOwner: 'Adicionar Proprietário',
       getAllOwners: 'Obter Todos os Proprietários',
       ownerAdded: ' foi adicionado com sucesso!',
@@ -84,12 +85,13 @@ const translations = {
       ownerNIF: 'Número fiscal (NIF)',
       cellNumber: 'Número de telemóvel',
       email: 'Email',
+      owners: 'Proprietários',
+      // Terrenos
       addLand: 'Adicionar Terreno',
       getAllLands: 'Obter Todos os Terrenos',
       moveBovine: 'Mover Bovino',
       getAllMovements: 'Obter Todos as Mudas',
       cattle: 'Gado',
-      owners: 'Proprietários',
       land: 'Terreno',
       landMovements: 'Movimentos de Terreno',
       allCattle: 'Bovinos Gerais',

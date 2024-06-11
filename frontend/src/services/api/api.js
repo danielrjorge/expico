@@ -28,7 +28,7 @@ export const getAllBovineButchers = () => api.post('/bovines/butchers');
 export const addBovineButcher = (butcherRequest) => api.post('/bovines/butchers', butcherRequest);
 
 // Owners
-export const getAllOwners = () => api.get('/owners');
+export const getAllOwners = () => api.get('/owners/');
 export const getOwnerById = (ownerId) => api.get(`/owners/id/${ownerId}`);
 export const getOwnerByNif = (nif) => api.get(`/owners/nif/${nif}`);
 export const addOwner = (newOwnerRequest) => api.post('/owners/', newOwnerRequest);

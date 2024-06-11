@@ -35,7 +35,7 @@ const Main = () => {
       case 'owners':
         return (
           <Box>
-            <Button variant="contained" color="primary" sx={{ marginRight: 2 }} onClick={() => alert('Navigate to Add Owner')}>
+            <Button variant="contained" color="primary" sx={{ marginRight: 2 }} onClick={() => navigate('/add-owner')}>
               {translations.addOwner}
             </Button>
             <Button variant="contained" color="secondary" onClick={() => alert('Navigate to Get Owners')}>

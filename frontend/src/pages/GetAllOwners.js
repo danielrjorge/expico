@@ -10,12 +10,21 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Link } from "react-router-dom";
+import DeleteOwnerAlertDialog from "../components/DeleteOwnerAlertDialog";
 
 const GetAllOwners = () => {
   const navigate = useNavigate();
   const { translations } = useLanguage();
   const [alert, setAlert] = useState({ type: "", message: "" });
   const [ownerData, setOwnerData] = useState([]);
+
+  const setUpdateData = (data) => {
+    localStorage.setItem("updateOwnerName", data.ownerName);
+    localStorage.setItem("updateOwnerGovId", data.ownerGovId);
+    localStorage.setItem("updateOwnerNIF", data.ownerNIF);
+    localStorage.setItem("updateOwnerCellNumber", data.ownerCellNumber);
+    localStorage.setItem("updateOwnerEmail", data.ownerEmail);
+  }
 
   useEffect( () => {
     // GET request using axios with error handling
@@ -74,16 +83,17 @@ const GetAllOwners = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Link>
+                <Link to="/update-owner">
                   <Button
                     sx={{ marginTop: 1, marginBottom: 1 }}
                     variant="contained"
                     color="info"
-                    onClick={() => alert('update')}
+                    onClick={() => setUpdateData(row)}
                   >
                     {translations.update}
                   </Button>
                 </Link>
+                <DeleteOwnerAlertDialog ownerNIF={row.ownerNIF}/>
               </Box>
             </TableRow>
           ))}

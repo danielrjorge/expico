@@ -10,6 +10,7 @@ import GetAllBovines from './pages/GetAllBovines';
 import UpdateBovine from './pages/UpdateBovine';
 import AddOwner from './pages/AddOwner';
 import GetAllOwners from './pages/GetAllOwners';
+import UpdateOwner from './pages/UpdateOwner';
 
 const App = () => (
   <LanguageProvider>
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/update-bovine" element={<UpdateBovine />} />
           <Route path="/get-all-bovines" element={<GetAllBovines />} />
           <Route path="/add-owner" element={<AddOwner />} />
+          <Route path="/update-owner" element={<UpdateOwner />} />
           <Route path="/get-all-owners" element={<GetAllOwners />} />
           {/* Define other routes here */}
         </Routes>

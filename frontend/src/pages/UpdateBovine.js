@@ -35,6 +35,7 @@ export default function UpdateBovine() {
         setFathersCode(localStorage.getItem('updateBovineFathersCode'))
     }
     setLastKnownOwnerNif(localStorage.getItem('updateBovineLastOwnerNif'))
+
     }, []);
 
   const [bovineCode, setBovineCode] = useState('');

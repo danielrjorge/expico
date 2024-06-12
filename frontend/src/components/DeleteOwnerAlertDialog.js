@@ -6,14 +6,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useLanguage } from "../contexts/LanguageContext";
-import { useNavigate } from "react-router-dom";
 
-import { deleteBovine } from "../services/api/api";
+import { deleteOwnerByNif } from "../services/api/api";
 
-export default function DeleteAlertDialog( {bovineCode} ) {
+export default function DeleteOwnerAlertDialog( {ownerNIF} ) {
   const [open, setOpen] = React.useState(false);
   const { translations } = useLanguage();
-  const navigate = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,12 +29,10 @@ export default function DeleteAlertDialog( {bovineCode} ) {
 
   const handleDelete = async () => {
     try {
-
-      await deleteBovine(bovineCode);
-      setTimeout(() => navigate("/get-all-bovines"), 2000); // Navigate back to home after 2 seconds
-      console.log("Bovine with code " + bovineCode + " deleted succefully!");
+      await deleteOwnerByNif(ownerNIF);
+      console.log("Owner with NIF " + ownerNIF + " deleted succefully!");
     } catch (error) {
-      console.log("Failed to delete bovine with code " + bovineCode);
+      console.log("Failed to delete owner with NIF " + ownerNIF);
     }
   }
 
@@ -52,7 +48,7 @@ export default function DeleteAlertDialog( {bovineCode} ) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {translations.confirmDeleteBovine}
+          {translations.confirmDeleteOwner + ownerNIF}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">

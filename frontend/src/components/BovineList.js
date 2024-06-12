@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
-import DeleteAlertDialog from "./DeleteAlertDialog";
+import DeleteBovineAlertDialog from "./DeleteBovineAlertDialog";
 
 export default function BovineList({ bovineDataArray }) {
   const { translations } = useLanguage();
@@ -49,9 +49,9 @@ export default function BovineList({ bovineDataArray }) {
       // color
       case "PRETO":
         return translations.black;
-      case "WHITE":
+      case "BRANCO":
         return translations.white;
-      case "RED":
+      case "VERMELHO":
         return translations.red;
       default:
         return value;
@@ -143,7 +143,7 @@ export default function BovineList({ bovineDataArray }) {
                     {translations.update}
                   </Button>
                 </Link>
-                <DeleteAlertDialog bovineCode={row.bovineCode} />
+                <DeleteBovineAlertDialog bovineCode={row.bovineCode} />
               </Box>
             </TableRow>
           ))}

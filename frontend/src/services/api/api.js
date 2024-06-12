@@ -32,7 +32,7 @@ export const getAllOwners = () => api.get('/owners/');
 export const getOwnerById = (ownerId) => api.get(`/owners/id/${ownerId}`);
 export const getOwnerByNif = (nif) => api.get(`/owners/nif/${nif}`);
 export const addOwner = (newOwnerRequest) => api.post('/owners/', newOwnerRequest);
-export const updateOwner = (updateOwnerRequest) => api.put('/owners', updateOwnerRequest);
+export const updateOwner = (updateOwnerRequest) => api.put('/owners/', updateOwnerRequest);
 export const deleteOwnerByNif = (nif) => api.delete(`/owners/${nif}`);
 
 // Land

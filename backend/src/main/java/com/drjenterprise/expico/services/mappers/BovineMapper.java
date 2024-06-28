@@ -66,10 +66,13 @@ public class BovineMapper {
         response.setFathersCode(dao.getFathersCode());
         //same here as above
         if(dao.getLastKnownOwner() != null){
-            //Only show relevant attributes (check later for security issues)
+            //check later for security issues
             OwnerRES responseOwner = new OwnerRES();
             responseOwner.setOwnerNIF(dao.getLastKnownOwner().getOwnerNIF());
             responseOwner.setOwnerName(dao.getLastKnownOwner().getOwnerName());
+            responseOwner.setOwnerCellNumber(dao.getLastKnownOwner().getOwnerCellNumber());
+            responseOwner.setOwnerEmail(dao.getLastKnownOwner().getOwnerEmail());
+            responseOwner.setOwnerGovId(dao.getLastKnownOwner().getOwnerGovId());
             response.setLastKnownOwner(responseOwner);
         }
         return response;

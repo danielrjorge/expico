@@ -20,11 +20,11 @@ export const getAllBovinePurchases = () => api.post('/bovines/purchases');
 export const addBovinePurchase = (purchaseRequest) => api.post('/bovines/purchases', purchaseRequest);
 
 // Bovine Sales
-export const getAllBovineSales = () => api.post('/bovines/sales/');
+export const getAllBovineSales = () => api.get('/bovines/sales/');
 export const addBovineSale = (saleRequest) => api.post('/bovines/sales/', saleRequest);
 
 // Bovine Butchers
-export const getAllBovineButchers = () => api.post('/bovines/butchers');
+export const getAllBovineButchers = () => api.get('/bovines/butchers');
 export const addBovineButcher = (butcherRequest) => api.post('/bovines/butchers', butcherRequest);
 
 // Owners

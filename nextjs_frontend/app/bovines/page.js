@@ -4,7 +4,7 @@ import AddBovineInputForm from '@/components/AddBovineInputForm'
 import React, { useState, useEffect } from 'react'
 import { TooltipProvider } from '@radix-ui/react-tooltip'
 import Link from 'next/link'
-import { Package, BookOpenText, LineChart, Settings, Euro, Tractor, Users2, Plus, Percent } from 'lucide-react'
+import { Package, BookOpenText, Settings, Euro, Tractor, Plus, Percent, BadgeEuro, ShieldX } from 'lucide-react'
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
 import Image from "next/image"
 import { MoreHorizontal } from "lucide-react"
@@ -34,7 +34,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { getAllBovines, getAllFarmBovines, getAllOwners, addBovineSale } from '@/services/api/api'
+import { getAllBovines, getAllFarmBovines, getAllOwners, addBovineSale, getAllBovineSales } from '@/services/api/api'
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
@@ -48,6 +48,15 @@ import {
 } from "@/components/ui/select"
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 
 const bovines = () => {
@@ -55,10 +64,13 @@ const bovines = () => {
   const [showAddBovineForm, setShowAddBovineForm] = useState(false);
   const [showAllBovinesCard, setShowAllBovinesCard] = useState(false);
   const [showFarmBovinesCard, setShowFarmBovinesCard] = useState(false);
+  const [showBovineSalesCard, setShowBovineSalesCard] = useState(false);
+
   const [allBovinesList, setAllBovinesList] = useState([]);
   const [farmBovinesList, setFarmBovinesList] = useState([]);
   const [sellBovineData, setSellBovineData] = useState("");
-  const [allOwnersList, setAllOwnersList] = useState("");
+  const [allOwnersList, setAllOwnersList] = useState([]);
+  const [bovineSalesList, setBovineSalesList] = useState([]);
 
   const { toast } = useToast()
 
@@ -69,6 +81,7 @@ const bovines = () => {
   function displayAddBovineForm() {
     setShowFarmBovinesCard(false);
     setShowAllBovinesCard(false);
+    setShowBovineSalesCard(false);
     setShowAddBovineForm(true);
   }
 
@@ -76,6 +89,7 @@ const bovines = () => {
     handleGetAllBovines();
     setShowAddBovineForm(false);
     setShowFarmBovinesCard(false);
+    setShowBovineSalesCard(false);
     setShowAllBovinesCard(true);
   }
 
@@ -83,7 +97,16 @@ const bovines = () => {
     handleGetFarmBovines();
     setShowAddBovineForm(false);
     setShowAllBovinesCard(false);
+    setShowBovineSalesCard(false);
     setShowFarmBovinesCard(true);
+  }
+
+  function displayBovineSalesCard() {
+    handleGetAllBovineSales();
+    setShowAddBovineForm(false);
+    setShowAllBovinesCard(false);
+    setShowBovineSalesCard(true);
+    setShowFarmBovinesCard(false);
   }
 
   function handleGetAllBovines() {
@@ -113,7 +136,7 @@ const bovines = () => {
     getAllOwners()
       .then(response => {
         //removes self (assuming profile owner is in the first position)
-        response.data.splice(0,1);
+        response.data.splice(0, 1);
         setAllOwnersList(response.data);
         console.log(response.data);
       })
@@ -121,6 +144,20 @@ const bovines = () => {
         console.error('There was an error!', error);
       });
 
+  }
+
+  function handleGetAllBovineSales() {
+    getAllBovineSales().then(response => {
+      setBovineSalesList(response.data);
+    })
+    .catch(error => {
+      toast({
+        title: "Erro",
+        description: "Falha ao obter a lista de todas as vendas de bovinos.",
+        action: (
+          <ToastAction altText="Fechar notificacao">Voltar</ToastAction>
+        ),
+      })})
   }
 
   function chooseStatusBadgeStyle(status) {
@@ -152,7 +189,7 @@ const bovines = () => {
 
   function submitSale() {
     //check if all the fields are filled
-    if(sellBovineData.saleDate == null || sellBovineData.buyer == null || sellBovineData.totalPrice == null || sellBovineData.vatPercentage == null) {
+    if (sellBovineData.saleDate == null || sellBovineData.buyer == null || sellBovineData.totalPrice == null || sellBovineData.vatPercentage == null) {
       toast({
         title: "Erro",
         description: "Um ou mais dos campos da venda nao foram preenchidos",
@@ -181,7 +218,6 @@ const bovines = () => {
         })
         console.error('There was an error!', error);
       });
-
   }
 
   return (
@@ -228,13 +264,14 @@ const bovines = () => {
                 <TooltipTrigger asChild>
                   <Link
                     href="#"
+                    onClick={displayBovineSalesCard}
                     className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   >
                     <Package className="h-5 w-5" />
-                    <span className="sr-only">Products</span>
+                    <span className="sr-only">Vendas de bovinos</span>
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Products</TooltipContent>
+                <TooltipContent side="right">Vendas de bovinos</TooltipContent>
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -242,11 +279,11 @@ const bovines = () => {
                     href="#"
                     className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   >
-                    <Users2 className="h-5 w-5" />
-                    <span className="sr-only">Customers</span>
+                    <BadgeEuro className="h-5 w-5" />
+                    <span className="sr-only">Compras de bovinos</span>
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Customers</TooltipContent>
+                <TooltipContent side="right">Compras de bovinos</TooltipContent>
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -254,11 +291,11 @@ const bovines = () => {
                     href="#"
                     className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   >
-                    <LineChart className="h-5 w-5" />
-                    <span className="sr-only">Analytics</span>
+                    <ShieldX className="h-5 w-5" />
+                    <span className="sr-only">Abates</span>
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Analytics</TooltipContent>
+                <TooltipContent side="right">Abates</TooltipContent>
               </Tooltip>
             </nav>
             <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -278,7 +315,7 @@ const bovines = () => {
           </aside>
         </div>
       </TooltipProvider>
-      <div className="flex flex-col mt-5 ml-5 justify-center align-middle bg-green-700 rounded-xl p-2 ">
+      <div className="flex flex-col mt-5 ml-5 bg-green-700 justify-center align-middle rounded-xl p-2 ">
         {showAddBovineForm && (<AddBovineInputForm id="addBovineForm" />)}
 
         <Card id='GetAllBovinesCardList' hidden={!showAllBovinesCard}>
@@ -344,11 +381,11 @@ const bovines = () => {
                       {row.fathersCode}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                    <Popover>
+                      <Popover>
                         <PopoverTrigger asChild>
                           <Button
                             variant="ghost"
-                            >
+                          >
                             {row.lastKnownOwner.ownerName}
                           </Button>
                         </PopoverTrigger>
@@ -464,7 +501,8 @@ const bovines = () => {
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
-                            variant="outline"
+                            variant="primary"
+                            className="bg-yellow-400"
                             onClick={() => setSellBovineData(prevState => ({
                               ...prevState,
                               'bovineCode': row.bovine.bovineCode
@@ -496,52 +534,52 @@ const bovines = () => {
                               <div className="grid grid-cols-3 items-center gap-4">
                                 <Label htmlFor="newOwner">Novo Proprietario</Label>
                                 <Select onValueChange={(e) => setSellBovineData(prevState => ({
-                                    ...prevState,
-                                    'buyer': e
-                                  }))}
-                                  >
+                                  ...prevState,
+                                  'buyer': e
+                                }))}
+                                >
                                   <SelectTrigger className="col-span-2 h-8">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent >
-                                    {allOwnersList.map((item) => ( <SelectItem key={item.ownerNIF} 
-                                    value={item}>{item.ownerName}</SelectItem>))}
+                                    {allOwnersList.map((item) => (<SelectItem key={item.ownerNIF}
+                                      value={item}>{item.ownerName}</SelectItem>))}
                                   </SelectContent>
                                 </Select>
                               </div>
                               <div className="grid grid-cols-3 items-center gap-4">
                                 <Label htmlFor="totalPrice">Preco</Label>
                                 <div className='col-span-2 grid grid-cols-8 items-center'>
-                                <Input
-                                  id="totalPrice"
-                                  className="col-span-7 h-8"
-                                  type="number"
-                                  step=".01"
-                                  min="0.00"
-                                  onChange={(e) => setSellBovineData(prevState => ({
-                                    ...prevState,
-                                    'totalPrice': roundPrice(e.target.value)
-                                  }))}
-                                />
-                                <Euro className='h-4 w-4 col-span-1'/>
+                                  <Input
+                                    id="totalPrice"
+                                    className="col-span-7 h-8"
+                                    type="number"
+                                    step=".01"
+                                    min="0.00"
+                                    onChange={(e) => setSellBovineData(prevState => ({
+                                      ...prevState,
+                                      'totalPrice': roundPrice(e.target.value)
+                                    }))}
+                                  />
+                                  <Euro className='h-4 w-4 col-span-1' />
                                 </div>
-                                
+
                               </div>
                               <div className="grid grid-cols-3 items-center gap-4">
                                 <Label htmlFor="vat">Taxa IVA</Label>
                                 <div className='col-span-2 grid grid-cols-8 items-center'>
-                                <Input
-                                  id="vat"
-                                  className="col-span-7 h-8 text-center"
-                                  type="number"
-                                  step="1"
-                                  min="0"
-                                  onChange={(e) => setSellBovineData(prevState => ({
-                                    ...prevState,
-                                    'vatPercentage': e.target.value
-                                  }))}
-                                />
-                                <Percent className='h-4 w-4 col-span-1'/>
+                                  <Input
+                                    id="vat"
+                                    className="col-span-7 h-8 text-center"
+                                    type="number"
+                                    step="1"
+                                    min="0"
+                                    onChange={(e) => setSellBovineData(prevState => ({
+                                      ...prevState,
+                                      'vatPercentage': e.target.value
+                                    }))}
+                                  />
+                                  <Percent className='h-4 w-4 col-span-1' />
                                 </div>
                               </div>
                               <div className="grid grid-cols-2 items-center justify-between gap-4">
@@ -554,6 +592,51 @@ const bovines = () => {
                           </div>
                         </PopoverContent>
                       </Popover>
+                    </TableCell>
+                  </TableRow>))}
+              </TableBody>
+            </Table>
+          </CardContent>
+          <CardFooter>
+
+          </CardFooter>
+        </Card>
+
+        <Card id='GetBovineSalesList' hidden={!showBovineSalesCard}>
+          <CardHeader>
+            <CardTitle>Vendas de bovinos</CardTitle>
+            <CardDescription>
+              Todas as vendas de bovinos
+            </CardDescription>
+          </CardHeader>
+          <Button className="ml-6 bg-green-500 hover:bg-blue-500" variant="destructive">Nova venda</Button>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Bovino</TableHead>
+                  <TableHead className="hidden md:table-cell">Data da venda</TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Comprador
+                  </TableHead>
+                  <TableHead className="hidden md:table-cell">Preco</TableHead>
+                  <TableHead className="hidden md:table-cell">IVA</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {bovineSalesList.map((row) => (
+                  //TODO mudar para usar a internal ID da venda (tem de se alterar no back-end)
+                  <TableRow key={row.bovine.bovineInternalId}>
+                    <TableCell className="font-medium">
+                      {row.bovine.bovineCode}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">{row.saleDate}</TableCell>
+                    <TableCell className="hidden md:table-cell">{row.bovine.lastKnownOwner.ownerName}</TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {row.totalPrice} €
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {row.vatPercentage} %
                     </TableCell>
                   </TableRow>))}
               </TableBody>
